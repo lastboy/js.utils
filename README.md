@@ -22,6 +22,6 @@ js.utils
 * copy(srcobj, destobj, override)
     + srcobj {Object} The source object
     + destobj {Object} The destination object
-    + override {Object} Override the existing property (deault to false)	
+    + override {Object} Override the existing property (deault to false)
 
 
