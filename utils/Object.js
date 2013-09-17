@@ -34,9 +34,8 @@ module.exports = function () {
         },
 
         /**
-         * Copy the source object's properties.
+         * Copy the source object's properties to the destination object.
          * TODO TBD make it more robust, recursion and function support
-         * TODO move to a common module
          *
          * @param srcobj The source object
          * @param destobj The destination object
