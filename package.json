@@ -31,7 +31,8 @@
     "copy"
   ],
   "dependencies": {
-    "typedas": "~1.0.0"
+    "typedas": "~1.0.0",
+    "underscore": "~1.5.2"
   },
   "devDependencies": {},
   "contributors": [

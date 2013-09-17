@@ -72,7 +72,46 @@ function containsTest() {
     objutils.contains(test, [{foo:[1, 2]}]);
 }
 
-function test() {
+function loadTemplateTest() {
+
+    _log.log(" Testing Template Loading... ");
+
+    _log.log(" Test 1... ");
+    var out = require("./jsutils.js").Template.template({
+        path: "./test",
+        name: "templateTest",
+        data: {
+            status: "successfully"
+        }
+    });
+
+    console.log("Template output: ", out);
+
+    _log.log(" Test 2... ");
+    var out = require("./jsutils.js").Template.template({
+        path: "/home/arik/dev/projects/lastboy/js.utils/test/",
+        name: "templateTest",
+        data: {
+            status: "successfully"
+        }
+    });
+
+    console.log("Template output: ", out);
+
+    _log.log(" Test 3... ");
+    var out = require("./jsutils.js").Template.template({
+        content: "Custom content Test was loaded {{status}}.",
+        name: "templateTest",
+        data: {
+            status: "successfully"
+        }
+    });
+
+    console.log("Template output: ", out);
+
+}
+
+function tests() {
 
     var destobj = {},
         srcobj = {foo: 'foo', nested: [ {inner: [1, 1] }]};
@@ -84,7 +123,9 @@ function test() {
     }
 
     containsTest();
+
+    loadTemplateTest();
 }
 
 
-test();
+tests();
