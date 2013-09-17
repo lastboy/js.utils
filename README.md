@@ -24,4 +24,9 @@ js.utils
     + destobj {Object} The destination object
     + override {Object} Override the existing property (deault to false)
 
+* contains(obj, value)
+    + obj {Object} The referenced object
+    + value {Object} The value to be searched
+
+
 

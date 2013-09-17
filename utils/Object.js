@@ -8,7 +8,7 @@ module.exports = function () {
         /**
          *  Check if a given object contains a value
          *
-         * @param obj The object that might contains
+         * @param obj The referenced object
          * @param value The value to be searched
          *
          * @returns {boolean} If the value contains in the obj return true else return false
