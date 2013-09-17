@@ -7,13 +7,12 @@ js.utils
 ### Usage
 
 #### Object
-* Copy the 'srcobj' to the 'destobj'
+* Copy the 'srcobj' to the 'destobj' <br/>
 
-
-    var destobj = {},
-        srcobj = {foo: 'foo'};
-    require("js.utils").Object.copy(srcobj, destobj);
-
+    <pre><code>var destobj = {},
+srcobj = {foo: 'foo'};
+  require("js.utils").Object.copy(srcobj, destobj);
+</code></pre>
 
 ### Reference
 
