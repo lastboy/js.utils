@@ -1,6 +1,6 @@
 var _log = require("./utils/Logger.js");
 
-function compare(objects) {
+function compareTest(objects) {
     var compare = [], n= 0,
         anchor, counter=0;
 
@@ -29,8 +29,6 @@ function compare(objects) {
             if (item && item == anchor) {
                 anchor = item;
                 _log.log(" Compare objects [ " + (counter-1) + " , " + counter + " ],  passed" );
-                _log.log(" output : [" + (counter-1) +  "] " + item );
-                _log.log(" output : [" + (counter) +  "] " + item );
 
             } else {
                 _log.log(" Compare objects [ " + (counter-1) + " , " + counter + " ],  failed" );
@@ -44,6 +42,36 @@ function compare(objects) {
     return (n > 0 ? false : true);
 }
 
+function containsTest() {
+
+    _log.log(" Testing contains objects... ");
+
+    var test = ["1", 2, "3", [{foo: [1, 2]}]],
+        objutils = require("./jsutils.js").Object,
+        testmsg = " Contains objects: " + JSON.stringify(test) + ",  ";
+
+
+    if (objutils.contains(test, [{foo:[1, 2]}])) {
+        _log.log( testmsg + ", [{foo:[1, 2]}]" + " - passed");
+    } else {
+        _log.log( testmsg + ", [{foo:[1, 2]}] - failed");
+    }
+
+     if (objutils.contains(test, 2)) {
+        _log.log( testmsg + ", 2 - passed");
+    } else {
+        _log.log( testmsg + ", 2 - failed");
+    }
+
+     if (!objutils.contains(test, "2")) {
+        _log.log( testmsg + ", \"2\" - passed");
+    } else {
+        _log.log( testmsg + " - failed");
+    }
+
+    objutils.contains(test, [{foo:[1, 2]}]);
+}
+
 function test() {
 
     var destobj = {},
@@ -51,9 +79,11 @@ function test() {
 
     require("./jsutils.js").Object.copy(srcobj, destobj);
 
-    if (!compare([srcobj, destobj])) {
+    if (!compareTest([srcobj, destobj])) {
         console.error("[utils object test] Compare test failed for Object.copy utility");
     }
+
+    containsTest();
 }
 
 

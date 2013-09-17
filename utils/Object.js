@@ -1,8 +1,37 @@
-var typedas = require("typedas");
+var typedas = require("typedas"),
+    arrayutils = require("./Array.js");
 
 module.exports = function () {
 
     return {
+
+        /**
+         *  Check if a given object contains a value
+         *
+         * @param obj The object that might contains
+         * @param value The value to be searched
+         *
+         * @returns {boolean} If the value contains in the obj return true else return false
+         */
+        contains: function (obj, value) {
+            var key;
+
+            if (obj) {
+                for (key in obj) {
+                    if (typedas.isObject(value) || typedas.isArray(value)) {
+                        if (JSON.stringify(obj[key]) === JSON.stringify(value)) {
+                            return true;
+                        }
+
+                    } else {
+                        if (obj[key] === value) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        },
 
         /**
          * Copy the source object's properties.
@@ -41,7 +70,7 @@ module.exports = function () {
 
                             } else if (typedas.isArray(obj)) {
 
-                                me.cleanupArray(srcobj[name]);
+                                arrayutils.cleanupArray(srcobj[name]);
                                 if (override) {
                                     destobj[name] = srcobj[name];
 
@@ -49,7 +78,7 @@ module.exports = function () {
                                     size = destobj[name].length;
                                     for (idx = 0; idx < size; idx++) {
                                         item = obj[idx];
-                                        srcobj[name] = me.removeArrayItemByValue(srcobj[name], item);
+                                        srcobj[name] = arrayutils.removeArrayItemByValue(srcobj[name], item);
                                     }
                                     destobj[name] = destobj[name].concat(srcobj[name]);
                                 }
