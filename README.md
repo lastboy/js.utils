@@ -28,8 +28,7 @@ srcobj = {foo: 'foo'};
 
 * Validate if 'foo' exists in a given array <br/>
 
-    <pre><code>
-        require("js.utils").Object.contains(['foo'], 'foo');
+    <pre><code>require("js.utils").Object.contains(['foo'], 'foo');
 </code></pre>
 
 
