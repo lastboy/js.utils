@@ -88,7 +88,7 @@ srcobj = {foo: 'foo'};
 <p>Get information about the list of installed packages</p>
 * info(config, callback)
     + config properties:
-        + global    {Boolean}   the packages are global, optional values are [true/false] (defaults to false)
+        + global    {Boolean}   the packages are global, optional values are true/false (defaults to false)
         + details   {Boolean}   Whether to display the full details or just the basic details. (defaults to false)
         + list      {Array}     specific list of packages names (or else result all)
         + depth     {string}    npm argument for how deep the rabbit hole goes (defaults to 2)
@@ -100,13 +100,13 @@ srcobj = {foo: 'foo'};
 
 * installed(config, callback)
     + config properties:
-        + global    {Boolean}   the packages are global, optional values are [true/false]
+        + global    {Boolean}   the packages are global, optional values are true/false
         + list      {Array}     specific list of packages names (or else result all)
         + depth     {string}    npm argument for how deep the rabbit hole goes.
                                 -1 for unlimited (Not recommended, this will throw an error, this is npm behaviour)
     + callback {Function}       callback function for collecting the results. (get the data: this.data)
         + err       {String}    In case an error occurred this variable will contain the error data or else 'undefined'
-        + this.data {Object}    An object containing the packages names with a [true/false] value indicating if the package installed.
+        + this.data {Object}    An object containing the packages names with a true/false value indicating if the package installed.
 
 * Package class
     + getDetails    Get the full details if the 'details' flag was set to true
