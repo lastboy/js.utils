@@ -1,7 +1,17 @@
 var _spawn = require('child_process'),
     _log = require("./Logger.js"),
     _object = require("./Object.js"),
-    _q = require("q");
+    _q = require("q"),
+    _os = require('os');
+
+/**
+ * Check if the current OS is Linux
+ *
+ * @returns {boolean} in case running OS is linux return true else false
+ */
+function isLinux() {
+    return (_os.platform() == "linux");
+}
 
 module.exports = function () {
 
@@ -49,42 +59,58 @@ module.exports = function () {
     }
 
     function _$lookup(config) {
+        console.log('npm', config.args.join(" "));
         var listobj,
-            process = _spawn.spawn('npm', config.args),
+            command = 'npm',
+            args = config.args,
+            process,
             isdetails = config.details,
             callback = config.callback;
 
-        process.stdout.on('data', function (data) {
-            if (data) {
-                if (config.debug) {
-                    _log.log("\n> running command: npm ", config.args.join(" "));
+        if (isLinux()) {
+            process = _spawn.spawn(command, config.args);
 
-                } else {
-                    _log.log("\n>");
+        } else {
+            // probably windows
+            args.unshift(command);
+            args.unshift("/c");
+            command = "cmd";
+            process = _spawn.spawn(command, config.args);
+        }
+
+        if (process) {
+
+            process.stdout.on('data', function (data) {
+                if (data) {
+                    if (config.debug) {
+                        _log.log("\n> running command: npm ", config.args.join(" "));
+
+                    } else {
+                        _log.log("\n>");
+                    }
+
+                    try {
+                        listobj = JSON.parse(data);
+
+                    } catch (e) {
+                        _log.error("[js.utils.NPM info] Error occurred while looking for the package: ", e);
+                    }
                 }
+            });
 
-                try {
-                    listobj = JSON.parse(data);
+            process.stderr.on('data', function (data) {
+                _log.warn("[js.utils.NPM info] Warnings occurred while looking for the package:", JSON.parse(data));
+            });
 
-                } catch (e) {
-                    _log.error("[js.utils.NPM info] Error occurred while looking for the package: ", e);
+            process.on('close', function (code) {
+                var infos;
+
+                if (listobj) {
+                    infos = _process(listobj, isdetails, config.list);
+                    callback.call(infos);
                 }
-            }
-        });
-
-        process.stderr.on('data', function (data) {
-            _log.warn("[js.utils.NPM info] Warnings occurred while looking for the package:", JSON.parse(data));
-        });
-
-        process.on('close', function (code) {
-            var infos;
-
-            if (listobj) {
-                infos = _process(listobj, isdetails, config.list);
-                callback.call(infos);
-            }
-        });
-
+            });
+        }
     }
 
     function _$installed(config) {

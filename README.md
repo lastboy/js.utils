@@ -1,7 +1,7 @@
 js.utils
 ==============
 
-<p>General Utilities</p>
+<p>Utilities for:</p>
 
 * Object
     + copy/clone object
@@ -71,6 +71,7 @@ srcobj = {foo: 'foo'};
 ### Object
 
 <p>Copy the source object's properties to the destination object.</p>
+
 * copy(srcobj, destobj, override)
     + srcobj {Object} The source object
     + destobj {Object} The destination object
@@ -78,6 +79,7 @@ srcobj = {foo: 'foo'};
 
 
 <p>Check if a given object contains a value</p>
+
 * contains(obj, value)
     + obj {Object} The referenced object
     + value {Object} The value to be searched
@@ -86,6 +88,7 @@ srcobj = {foo: 'foo'};
 ### NPM
 
 <p>Get information about the list of installed packages</p>
+
 * info(config, callback)
     + config properties:
         + global    {Boolean}   the packages are global, optional values are true/false (defaults to false)

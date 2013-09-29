@@ -89,7 +89,7 @@ function loadTemplateTest() {
 
     _log.log(" Test 2... ");
     var out = require("./jsutils.js").Template.template({
-        path: "/home/arik/dev/projects/lastboy/js.utils/test/",
+        path: "./test/",
         name: "templateTest",
         data: {
             status: "successfully"
