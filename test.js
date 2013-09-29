@@ -17,7 +17,7 @@ function compareTest(objects) {
         });
     }
 
-    _log.log(" Testing copied objects... compare length: ", compare.length);
+    _log.log("\n Testing copied objects... compare length: ", compare.length);
     // compare the objects
     compare.forEach(function(item){
 
@@ -44,7 +44,7 @@ function compareTest(objects) {
 
 function containsTest() {
 
-    _log.log(" Testing contains objects... ");
+    _log.log("\n Testing contains objects... ");
 
     var test = ["1", 2, "3", [{foo: [1, 2]}]],
         objutils = require("./jsutils.js").Object,
@@ -111,6 +111,52 @@ function loadTemplateTest() {
 
 }
 
+function NPMTest() {
+
+
+    /**
+     *  Test for NPM info & installed methods
+     *
+     */
+    require("./jsutils.js").NPM.info({global: false, details: true, debug:1, list:["typedas"]}, function(err) {
+        console.log("> ... Test 1, get info details ");
+        var data = this.data;
+        data.forEach(function(item) {
+            if (item) {
+                console.log(" details: ", JSON.stringify(item.get("details")));
+            }
+        });
+
+    });
+
+    /**
+     *  Test for NPM info & installed methods
+     *
+     */
+    require("./jsutils.js").NPM.info({global: false, details: true, debug:1}, function(err) {
+        console.log("> ... Test 2, get info details ");
+        var data = this.data;
+        data.forEach(function(item) {
+            if (item) {
+                console.log(" details: ", JSON.stringify(item.get("details")));
+            }
+        });
+
+    });
+
+    require("./jsutils.js").NPM.installed({list: ["bower"], debug:1, depth: 10}, function(err) {
+        console.log("> ... Test 3, check if bower installed");
+        console.log(this);
+    });
+
+    require("./jsutils.js").NPM.installed({list: ["typedas"]}, function(err) {
+        console.log("> ... Test 4, check if typedas installed");
+        console.log(this);
+    });
+
+
+}
+
 function tests() {
 
     var destobj = {},
@@ -125,6 +171,8 @@ function tests() {
     containsTest();
 
     loadTemplateTest();
+
+    NPMTest();
 }
 
 

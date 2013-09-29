@@ -5,7 +5,8 @@ module.exports = function() {
 
         Object: require("./utils/Object.js"),
         Array: require("./utils/Array.js"),
-        Template: require("./utils/Template.js")
+        Template: require("./utils/Template.js"),
+        NPM: require("./utils/NPM.js")
 
     };
 
