@@ -82,12 +82,12 @@ module.exports = function () {
 
             process.stdout.on('data', function (data) {
                 if (data) {
-                    if (config.debug) {
-                        _log.log("\n> running command: npm ", config.args.join(" "));
-
-                    } else {
-                        _log.log("\n>");
-                    }
+//                    if (config.debug) {
+//                        _log.log("\n> running command: npm ", config.args.join(" "));
+//
+//                    } else {
+//                        _log.log("\n>");
+//                    }
 
                     try {
                         listobj = JSON.parse(data);

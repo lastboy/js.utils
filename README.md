@@ -139,7 +139,7 @@ srcobj = {foo: 'foo'};
 
 * NPM List
     <p>For getting the installed packages I'm using The NPM list command that might throw an error about problems.<br/>
-    Those problems will be describe as part of the NPM information tree. Those error are not really functional errors but more like packages problems. <br/>
+    Those problems will be described as part of the NPM information tree. Those errors are not really functional errors but more like packages problems. <br/>
     The methods used in this module will still function as expected. I just forward the NPM error. (you can turn the log off if needed) NPM problems:</p>
     + max depth reached
         This can be handled, if you don't need a really deep information use the 'depth' property to adjust.
