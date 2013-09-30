@@ -113,6 +113,14 @@ function loadTemplateTest() {
 
 function NPMTest() {
 
+    console.log("\n>### ... Log Test 1, false ");
+    require("./jsutils.js").init({log:false});
+    console.log("\n>### ...  ");
+    require("./jsutils.js").testlog();
+    console.log("\n>### ... Log Test 1 true");
+    require("./jsutils.js").init({log:true});
+    require("./jsutils.js").testlog();
+    console.log("\n>### \n");
 
     /**
      *  Test for NPM info & installed methods
@@ -129,6 +137,7 @@ function NPMTest() {
 
     });
 
+
     /**
      *  Test for NPM info & installed methods
      *
@@ -144,12 +153,14 @@ function NPMTest() {
 
     });
 
-    require("./jsutils.js").NPM.installed({list: ["bower"], debug:1, depth: 10}, function(err) {
-        console.log("> ... Test 3, check if bower installed");
+
+    require("./jsutils.js").NPM.installed({list: ["bower"], debug:1, depth: "10"}, function(err) {
+        console.log("> ... Test 3, check if bower installed locally");
         console.log(this);
     });
 
-    require("./jsutils.js").NPM.installed({list: ["typedas"]}, function(err) {
+
+    require("./jsutils.js").NPM.installed({list: ["typedas"], depth:"-1"}, function(err) {
         console.log("> ... Test 4, check if typedas installed");
         console.log(this);
     });

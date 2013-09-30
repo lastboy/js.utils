@@ -59,7 +59,7 @@ module.exports = function () {
     }
 
     function _$lookup(config) {
-        console.log('npm', config.args.join(" "));
+
         var listobj,
             command = 'npm',
             args = config.args,
@@ -99,7 +99,25 @@ module.exports = function () {
             });
 
             process.stderr.on('data', function (data) {
-                _log.warn("[js.utils.NPM info] Warnings occurred while looking for the package:", JSON.parse(data));
+                var buf, err;
+
+                if (data) {
+                    buf = new Buffer(data);
+                    err = buf.toString('utf8');
+                    if (err) {
+                        if (err.indexOf("extraneous") != -1) {
+                            _log.warn("Warning: there's a dependencies 'problems' section about 'extraneous'. It does not affect this process.\n");
+
+                        } else if (err.indexOf("max depth reached") != -1) {
+
+                            _log.warn("Warning: there's a dependencies 'problems' section about 'max depth reached'. It does not affect this process.\n");
+
+                        } else {
+                            _log.warn("[js.utils.NPM info] Warnings occurred while looking for the package:", err);
+                        }
+                    }
+                }
+
             });
 
             process.on('close', function (code) {
@@ -154,7 +172,7 @@ module.exports = function () {
 
             var args = [],
                 list,
-                depth = "2",
+                depth = "10",
                 details = false,
                 debug = 0,
                 resultlist,

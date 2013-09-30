@@ -17,8 +17,15 @@ js.utils
 
 ## Usage
 
+### Initial settings
+
+* Set the log on/off (by default set to on)
+  <pre><code>
+    require("js.utils").init({log: false});
+  </code></pre>
 
 ### Object
+
 * Copy the 'srcobj' to the 'destobj' <br/>
 
     <pre><code>var destobj = {},
@@ -94,8 +101,8 @@ srcobj = {foo: 'foo'};
         + global    {Boolean}   the packages are global, optional values are true/false (defaults to false)
         + details   {Boolean}   Whether to display the full details or just the basic details. (defaults to false)
         + list      {Array}     specific list of packages names (or else result all)
-        + depth     {string}    npm argument for how deep the rabbit hole goes (defaults to 2)
-                                -1 for unlimited (Not recommended, this will throw an error, this is npm behaviour)
+        + depth     {string}    npm argument for how deep the rabbit hole goes (defaults to 10)
+            + -1 for unlimited (Not recommended, NPM will might throw an error about "max depth reached")
     + callback {Function}   callback function for collecting the results. (get the data: this.data)
         + err       {String} In case an error occurred this variable will contain the error data or else 'undefined'
         + this.data {Object}    Array object containing the information about the packages that was found.
@@ -106,7 +113,7 @@ srcobj = {foo: 'foo'};
         + global    {Boolean}   the packages are global, optional values are true/false
         + list      {Array}     specific list of packages names (or else result all)
         + depth     {string}    npm argument for how deep the rabbit hole goes.
-                                -1 for unlimited (Not recommended, this will throw an error, this is npm behaviour)
+            + -1 for unlimited (Not recommended, NPM will might throw an error about "max depth reached")
     + callback {Function}       callback function for collecting the results. (get the data: this.data)
         + err       {String}    In case an error occurred this variable will contain the error data or else 'undefined'
         + this.data {Object}    An object containing the packages names with a true/false value indicating if the package installed.
@@ -127,3 +134,17 @@ srcobj = {foo: 'foo'};
         + path     {String} The full path where the templates exists (optional) e.g. /home/../test.tpl
         + content  {String} The string content instead of the file content (optional in case name exists & overrides the file content)
         + data     {Object} The data object properties (see underscore template)
+
+## Behavior
+
+* NPM List
+    <p>For getting the installed packages I'm using The NPM list command that might throw an error about problems.<br/>
+    Those problems will be describe as part of the NPM information tree. Those error are not really functional errors but more like packages problems. <br/>
+    The methods used in this module will still function as expected. I just forward the NPM error. (you can turn the log off if needed) NPM problems:</p>
+    + max depth reached
+        This can be handled, if you don't need a really deep information use the 'depth' property to adjust.
+    +  extraneous
+        It's not on your package.json, if it's installed don't worry about this message.
+
+For more information see the [NPM docs](https://npmjs.org/doc/)
+
