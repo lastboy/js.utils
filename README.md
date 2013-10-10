@@ -79,7 +79,7 @@ srcobj = {foo: 'foo'};
 
 Support for the browser version, including:
 Object, Array and Template(w/o template file loading support)
-You can load [jsutils-min.js](https://raw.github.com/lastboy/js.utils/master/jsutils-min.js)
+You can download [jsutils-min.js](https://raw.github.com/lastboy/js.utils/master/jsutils-min.js)
 
 Assign a ready event:
 
