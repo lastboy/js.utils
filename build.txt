@@ -1,0 +1,9 @@
+node  node_modules/requirejs/bin/r.js -o build.js
+
+test for the browser:
+run the server test: node web-server.js
+
+test for the node:
+npm test
+
+Both using the same test.js file
