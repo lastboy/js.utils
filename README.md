@@ -73,6 +73,14 @@ srcobj = {foo: 'foo'};
 </code></pre>
 
 
+## Versions
+
+### 0.0.9
+
+The browser version of js.utils including:
+Object, Array and Template(w/o template file support)
+You can load [jsutils-min.js](jsutils-min.js)
+
 ## Reference
 
 ### Object

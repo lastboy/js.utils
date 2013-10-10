@@ -1,8 +1,13 @@
-var _typedas = require("typedas");
+var _moduleArray = function () {
 
-module.exports = function () {
+    var _vars = {};
 
     return {
+
+        internal: function(refs) {
+            _vars = refs;
+
+        },
 
         /**
          * Clean empty entries out of an existing array
@@ -13,7 +18,7 @@ module.exports = function () {
         cleanupArray: function (arr) {
             var newArr = [];
 
-            if (arr && _typedas.isArray(arr)) {
+            if (arr && _vars.typedas.isArray(arr)) {
                 arr.forEach(function (item) {
                     if (item !== null && item !== undefined) {
                         newArr.push(item)
@@ -36,7 +41,7 @@ module.exports = function () {
             var newArr = [],
                 counter = 0;
 
-            if (arr && _typedas.isArray(arr)) {
+            if (arr && _vars.typedas.isArray(arr)) {
 
                 arr.forEach(function (item) {
                     if (item !== value && item !== null && item !== undefined) {
@@ -50,3 +55,18 @@ module.exports = function () {
         }
     };
 }();
+
+if (typeof exports !== 'undefined') {
+    if (typeof module !== 'undefined' && module.exports) {
+        // nodejs support
+        _moduleArray.internal({typedas: require("typedas")});
+        module.exports = _moduleArray;
+
+    }
+} else {
+    define(["typedas"], function (typedasref) {
+        // browser support
+        _moduleArray.internal({typedas: typedAs});
+        return _moduleArray;
+    });
+}

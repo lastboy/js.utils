@@ -1,9 +1,13 @@
-var typedas = require("typedas"),
-    arrayutils = require("./Array.js");
+var _moduleObject = function () {
 
-module.exports = function () {
+    var _vars = {};
 
     return {
+
+        internal: function(refs) {
+            _vars = refs;
+
+        },
 
         /**
          *  Check if a given object contains a value
@@ -18,7 +22,7 @@ module.exports = function () {
 
             if (obj) {
                 for (key in obj) {
-                    if (typedas.isObject(value) || typedas.isArray(value)) {
+                    if (_vars.typedas.isObject(value) || _vars.typedas.isArray(value)) {
                         if (JSON.stringify(obj[key]) === JSON.stringify(value)) {
                             return true;
                         }
@@ -56,20 +60,20 @@ module.exports = function () {
 
                         obj = destobj[name];
 
-                        if (typedas.isObject(srcobj[name])) {
+                        if (_vars.typedas.isObject(srcobj[name])) {
                             if (!destobj[name]) {
                                 destobj[name] = {};
                             }
                             arguments.callee.call(me, srcobj[name], destobj[name], override);
 
-                        } else if (typedas.isArray(srcobj[name])) {
+                        } else if (_vars.typedas.isArray(srcobj[name])) {
 
                             if (!obj) {
                                 destobj[name] = srcobj[name];
 
-                            } else if (typedas.isArray(obj)) {
+                            } else if (_vars.typedas.isArray(obj)) {
 
-                                arrayutils.cleanupArray(srcobj[name]);
+                                _vars.arrayutils.cleanupArray(srcobj[name]);
                                 if (override) {
                                     destobj[name] = srcobj[name];
 
@@ -77,7 +81,7 @@ module.exports = function () {
                                     size = destobj[name].length;
                                     for (idx = 0; idx < size; idx++) {
                                         item = obj[idx];
-                                        srcobj[name] = arrayutils.removeArrayItemByValue(srcobj[name], item);
+                                        srcobj[name] = _vars.arrayutils.removeArrayItemByValue(srcobj[name], item);
                                     }
                                     destobj[name] = destobj[name].concat(srcobj[name]);
                                 }
@@ -98,3 +102,23 @@ module.exports = function () {
 
     };
 }();
+
+
+if (typeof exports !== 'undefined') {
+    if (typeof module !== 'undefined' && module.exports) {
+        // nodejs support
+        _moduleObject.internal({
+            typedas: require("typedas"),
+            arrayutils: require("./Array.js")
+        });
+        module.exports = _moduleObject;
+
+    }
+} else {
+    define(["typedas", "array"], function(typedasref, arrayref) {
+
+        _moduleObject.internal({typedas: typedAs, arrayutils: arrayref});
+        return _moduleObject;
+    });
+}
+

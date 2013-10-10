@@ -1,4 +1,9 @@
-var _log = require("./utils/Logger.js");
+var _log,
+    _jsutils,
+    _Object,
+    _Array,
+    _Template;
+
 
 function compareTest(objects) {
     var compare = [], n= 0,
@@ -47,7 +52,7 @@ function containsTest() {
     _log.log("\n Testing contains objects... ");
 
     var test = ["1", 2, "3", [{foo: [1, 2]}]],
-        objutils = require("./jsutils.js").Object,
+        objutils = _Object,
         testmsg = " Contains objects: " + JSON.stringify(test) + ",  ";
 
 
@@ -57,13 +62,13 @@ function containsTest() {
         _log.log( testmsg + ", [{foo:[1, 2]}] - failed");
     }
 
-     if (objutils.contains(test, 2)) {
+    if (objutils.contains(test, 2)) {
         _log.log( testmsg + ", 2 - passed");
     } else {
         _log.log( testmsg + ", 2 - failed");
     }
 
-     if (!objutils.contains(test, "2")) {
+    if (!objutils.contains(test, "2")) {
         _log.log( testmsg + ", \"2\" - passed");
     } else {
         _log.log( testmsg + " - failed");
@@ -77,7 +82,7 @@ function loadTemplateTest() {
     _log.log(" Testing Template Loading... ");
 
     _log.log(" Test 1... ");
-    var out = require("./jsutils.js").Template.template({
+    var out = _Template.template({
         path: "./test",
         name: "templateTest",
         data: {
@@ -88,7 +93,7 @@ function loadTemplateTest() {
     console.log("Template output: ", out);
 
     _log.log(" Test 2... ");
-    var out = require("./jsutils.js").Template.template({
+    var out = _Template.template({
         path: "./test/",
         name: "templateTest",
         data: {
@@ -99,7 +104,7 @@ function loadTemplateTest() {
     console.log("Template output: ", out);
 
     _log.log(" Test 3... ");
-    var out = require("./jsutils.js").Template.template({
+    var out = _Template.template({
         content: "Custom content Test was loaded {{status}}.",
         name: "templateTest",
         data: {
@@ -114,19 +119,19 @@ function loadTemplateTest() {
 function NPMTest() {
 
     console.log("\n>### ... Log Test 1, false ");
-    require("./jsutils.js").init({log:false});
+    _jsutils.init({log:false});
     console.log("\n>### ...  ");
-    require("./jsutils.js").testlog();
+    _jsutils.testlog();
     console.log("\n>### ... Log Test 1 true");
-    require("./jsutils.js").init({log:true});
-    require("./jsutils.js").testlog();
+    _jsutils.init({log:true});
+    _jsutils.testlog();
     console.log("\n>### \n");
 
     /**
      *  Test for NPM info & installed methods
      *
      */
-    require("./jsutils.js").NPM.info({global: false, details: true, debug:1, list:["typedas"]}, function(err) {
+    _jsutils.NPM.info({global: false, details: true, debug:1, list:["typedas"]}, function(err) {
         console.log("> ... Test 1, get info details ");
         var data = this.data;
         data.forEach(function(item) {
@@ -142,7 +147,7 @@ function NPMTest() {
      *  Test for NPM info & installed methods
      *
      */
-    require("./jsutils.js").NPM.info({global: false, details: true, debug:1}, function(err) {
+    _jsutils.NPM.info({global: false, details: true, debug:1}, function(err) {
         console.log("> ... Test 2, get info details ");
         var data = this.data;
         data.forEach(function(item) {
@@ -154,13 +159,13 @@ function NPMTest() {
     });
 
 
-    require("./jsutils.js").NPM.installed({list: ["bower"], debug:1, depth: "10"}, function(err) {
+    _jsutils.NPM.installed({list: ["bower"], debug:1, depth: "10"}, function(err) {
         console.log("> ... Test 3, check if bower installed locally");
         console.log(this);
     });
 
 
-    require("./jsutils.js").NPM.installed({list: ["typedas"], depth:"-1"}, function(err) {
+    _jsutils.NPM.installed({list: ["typedas"], depth:"-1"}, function(err) {
         console.log("> ... Test 4, check if typedas installed");
         console.log(this);
     });
@@ -168,23 +173,50 @@ function NPMTest() {
 
 }
 
-function tests() {
 
-    var destobj = {},
-        srcobj = {foo: 'foo', nested: [ {inner: [1, 1] }]};
+if (typeof exports !== 'undefined') {
+    if (typeof module !== 'undefined' && module.exports) {
+        _log = require("./utils/Logger.js");
+        _jsutils = require("./jsutils.js");
+        _Object = _jsutils.Object;
+        _Array = _jsutils.Array;
+        _Template = _jsutils.Template;
 
-    require("./jsutils.js").Object.copy(srcobj, destobj);
+        var destobj = {},
+            srcobj = {foo: 'foo', nested: [ {inner: [1, 1] }]};
 
-    if (!compareTest([srcobj, destobj])) {
-        console.error("[utils object test] Compare test failed for Object.copy utility");
+        _Object.copy(srcobj, destobj);
+
+        if (!compareTest([srcobj, destobj])) {
+            console.error("[utils object test] Compare test failed for Object.copy utility");
+        }
+
+        containsTest();
+
+        loadTemplateTest();
+
+        NPMTest();
     }
+} else {
+    this.jsutilsOnReady = function(obj, arr, tpl) {
+        _Object = obj;
+        _Array = arr;
+        _log = console;
 
-    containsTest();
+        var destobj = {},
+            srcobj = {foo: 'foo', nested: [ {inner: [1, 1] }]};
 
-    loadTemplateTest();
+        _Object.copy(srcobj, destobj);
 
-    NPMTest();
+        if (!compareTest([srcobj, destobj])) {
+            console.error("[utils object test] Compare test failed for Object.copy utility");
+        }
+
+        containsTest();
+
+        console.log("Running template test... ", tpl.template({
+            data: {test: "test"},
+            content: "This is a '{{test}}'"
+        }));
+    }
 }
-
-
-tests();

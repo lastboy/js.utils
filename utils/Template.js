@@ -1,20 +1,18 @@
-var _ = require("underscore"),
-    _fs = require("fs"),
-    _log = require("./Logger.js"),
-    _path = require("path");
 
-// underscore settings for like mustache parametrization style {{foo}}
-_.templateSettings = {
-    interpolate : /\{\{(.+?)\}\}/g
-};
 
-module.exports = function () {
+var underscore ,
+    moduleTemplate = function () {
 
-    var _cache = {};
+    var _cache = {},
+        _vars = {};
 
     return {
 
-        underscore: _,
+        internal: function(refs) {
+            _vars = refs;
+        },
+
+        underscore: _vars._,
 
         /**
          * Load template file content of tpl type
@@ -26,26 +24,26 @@ module.exports = function () {
          */
         readTemplateFile: function (name, path) {
             if (!path) {
-                _log.error("[js.utils Template.readTemplateFile] 'path' argument is no valid ");
+                _vars.log.error("[js.utils Template.readTemplateFile] 'path' argument is no valid ");
             }
 
             var content,
                 file = [path, name].join("/");
 
-            file = _path.normalize(file);
+            file = _vars.path.normalize(file);
 
             try {
                 file = [file, "tpl"].join(".");
                 content = _cache[file];
                 if (!content) {
-                    content = _fs.readFileSync(file, "utf8");
+                    content = _vars.fs.readFileSync(file, "utf8");
                 }
 
                 // cache the file content
                 _cache[file] = content;
 
             } catch (e) {
-                _log.warn("[js.utils Template.readTemplateFile] File failed to load ", file, e);
+                _vars.log.warn("[js.utils Template.readTemplateFile] File failed to load ", file, e);
             }
 
             return content;
@@ -60,7 +58,7 @@ module.exports = function () {
          *      content The string content instead of the file content (optional in case name exists & overrides the file content)
          *      data The data object properties (see underscore template)
          */
-        template: function(config){
+        template: function (config) {
             if (!config) {
                 return undefined;
             }
@@ -71,13 +69,13 @@ module.exports = function () {
                 funcTpl = (content || this.readTemplateFile(name, path)),
                 template;
 
-                if (funcTpl) {
-                    template = _.template(funcTpl);
+            if (funcTpl) {
+                template = _vars._.template(funcTpl);
 
-                } else {
-                    _log.warn("[js.utils Template.template] Failed to process template ");
-                    return undefined;
-                }
+            } else {
+                _vars.log.warn("[js.utils Template.template] Failed to process template ");
+                return undefined;
+            }
 
             if (template) {
                 return template(data);
@@ -86,3 +84,70 @@ module.exports = function () {
     }
 
 }();
+
+if (typeof exports !== 'undefined') {
+    if (typeof module !== 'undefined' && module.exports) {
+        // nodejs support
+
+        underscore = require("underscore");
+
+        // underscore settings for like mustache parametrization style {{foo}}
+        underscore.templateSettings = {
+            interpolate: /\{\{(.+?)\}\}/g
+        };
+
+        moduleTemplate.internal({
+            fs: require("fs"),
+            log: require("./Logger.js"),
+            path: require("path"),
+            _: underscore
+        });
+        module.exports = moduleTemplate;
+
+    }
+} else {
+    define(["underscore"], function (underscore) {
+        // browser support
+        moduleTemplate = function() {
+
+            // underscore settings for like mustache parametrization style {{foo}}
+            _.templateSettings = {
+                interpolate: /\{\{(.+?)\}\}/g
+            };
+
+            return {
+
+                /**
+                 * Load and compile template with underscore
+                 *
+                 * @param config The params:
+                 *      name The name of the template e.g. /scraps/test (optional in case content exists)
+                 *      path The full path where the templates exists (optional) e.g. /home/../test.tpl
+                 *      content The string content instead of the file content (optional in case name exists & overrides the file content)
+                 *      data The data object properties (see underscore template)
+                 */
+                template: function (config) {
+                    if (!config) {
+                        return undefined;
+                    }
+                    var data = config.data,
+                        content = config.content,
+                        template;
+
+                    if (content) {
+                        template = _.template(content);
+
+                    } else {
+                        console.warn("[js.utils Template.template] Failed to process template ");
+                        return undefined;
+                    }
+
+                    if (template) {
+                        return template(data);
+                    }
+                }
+            }
+        }();
+        return moduleTemplate;
+    });
+}

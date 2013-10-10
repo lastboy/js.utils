@@ -1,0 +1,3 @@
+run the server test: node web-server.js
+
+node  ./src/node lib/r.js -o build.js
