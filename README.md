@@ -79,14 +79,14 @@ srcobj = {foo: 'foo'};
 
 Support for the browser version, including:
 Object, Array and Template(w/o template file loading support)
-You can download [jsutils-min.js](https://raw.github.com/lastboy/js.utils/master/jsutils-min.js)
+Direct download: [jsutils-min.js](https://raw.github.com/lastboy/js.utils/master/jsutils-min.js) 
 
 Assign a ready event:
 
     jsutilsOnReady = function(obj, arr, tpl){
     };
     
-Or you can use js.utils properties (when the page done loading):
+Or you can use js.utils global variables (when the page done loading):
 
 * jsutilsObject;
 * jsutilsArray;
