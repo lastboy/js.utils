@@ -5,6 +5,7 @@ var jsutils = this,
 
 jsutils.jsutilsObject = {};
 jsutils.jsutilsArray = {};
+jsutils.jsutilsTemplate = {};
 
 
 /**
