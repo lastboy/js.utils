@@ -77,9 +77,22 @@ srcobj = {foo: 'foo'};
 
 ### 0.0.9
 
-The browser version of js.utils including:
-Object, Array and Template(w/o template file support)
-You can load [jsutils-min.js](jsutils-min.js)
+Support for the browser version, including:
+Object, Array and Template(w/o template file loading support)
+You can load [jsutils-min.js](https://raw.github.com/lastboy/js.utils/master/jsutils-min.js)
+
+Assign a ready event:
+
+    jsutilsOnReady = function(obj, arr, tpl){
+    };
+    
+Or you can use js.utils properties (when the page done loading):
+
+* jsutilsObject;
+* jsutilsArray;
+* jsutilsTemplate;
+
+
 
 ## Reference
 
