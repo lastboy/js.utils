@@ -1,4 +1,4 @@
-var _moduleObject = function () {
+var _jsutilsModuleObject = function () {
 
     var _vars = {};
 
@@ -107,18 +107,18 @@ var _moduleObject = function () {
 if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
         // nodejs support
-        _moduleObject.internal({
+        _jsutilsModuleObject.internal({
             typedas: require("typedas"),
             arrayutils: require("./Array.js")
         });
-        module.exports = _moduleObject;
+        module.exports = _jsutilsModuleObject;
 
     }
 } else {
     define(["typedas", "array"], function(typedasref, arrayref) {
 
-        _moduleObject.internal({typedas: typedAs, arrayutils: arrayref});
-        return _moduleObject;
+        _jsutilsModuleObject.internal({typedas: typedAs, arrayutils: arrayref});
+        return _jsutilsModuleObject;
     });
 }
 

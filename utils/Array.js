@@ -1,4 +1,4 @@
-var _moduleArray = function () {
+var _jsutilsModuleArray = function () {
 
     var _vars = {};
 
@@ -59,14 +59,14 @@ var _moduleArray = function () {
 if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
         // nodejs support
-        _moduleArray.internal({typedas: require("typedas")});
-        module.exports = _moduleArray;
+        _jsutilsModuleArray.internal({typedas: require("typedas")});
+        module.exports = _jsutilsModuleArray;
 
     }
 } else {
     define(["typedas"], function (typedasref) {
         // browser support
-        _moduleArray.internal({typedas: typedAs});
-        return _moduleArray;
+        _jsutilsModuleArray.internal({typedas: typedAs});
+        return _jsutilsModuleArray;
     });
 }

@@ -1,7 +1,7 @@
 
 
-var underscore ,
-    moduleTemplate = function () {
+var _jsutilsUnderscore ,
+    _jsutilsModuleTemplate = function () {
 
     var _cache = {},
         _vars = {};
@@ -89,26 +89,26 @@ if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
         // nodejs support
 
-        underscore = require("underscore");
+        _jsutilsUnderscore = require("underscore");
 
         // underscore settings for like mustache parametrization style {{foo}}
-        underscore.templateSettings = {
+        _jsutilsUnderscore.templateSettings = {
             interpolate: /\{\{(.+?)\}\}/g
         };
 
-        moduleTemplate.internal({
+        _jsutilsModuleTemplate.internal({
             fs: require("fs"),
             log: require("./Logger.js"),
             path: require("path"),
-            _: underscore
+            _: _jsutilsUnderscore
         });
-        module.exports = moduleTemplate;
+        module.exports = _jsutilsModuleTemplate;
 
     }
 } else {
     define(["underscore"], function (underscore) {
         // browser support
-        moduleTemplate = function() {
+        _jsutilsModuleTemplate = function() {
 
             // underscore settings for like mustache parametrization style {{foo}}
             _.templateSettings = {
@@ -148,6 +148,6 @@ if (typeof exports !== 'undefined') {
                 }
             }
         }();
-        return moduleTemplate;
+        return _jsutilsModuleTemplate;
     });
 }
