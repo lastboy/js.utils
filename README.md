@@ -18,36 +18,30 @@ js.utils
 ## Usage
 
 ### Initial settings
-
 * Set the log on/off (by default set to on)
-  <pre><code>
-    require("js.utils").init({log: false});
+  <pre><code>require("js.utils").init({log: false});
   </code></pre>
 
 ### Object
-
 * Copy the 'srcobj' to the 'destobj' <br/>
-
     <pre><code>var destobj = {},
 srcobj = {foo: 'foo'};
   require("js.utils").Object.copy(srcobj, destobj);
 </code></pre>
 
 * Validate if 'foo' exists in a given array <br/>
-
     <pre><code>require("js.utils").Object.contains(['foo'], 'foo');
 </code></pre>
 
-
 ### NPM
 * get all local packages information
-
     <pre><code>require("js.utils").NPM.info({details: true}, function(err) {
            var data = this.data;
            // go over the array data
            data.forEach(function(item) {
                if (item) {
-                   console.log(" details: ", JSON.stringify(item.get("details")));
+                   console.log(" details: ",
+                        JSON.stringify(item.get("details")));
                }
            });
        });
@@ -56,13 +50,14 @@ srcobj = {foo: 'foo'};
 * check if the package 'bower' was installed
     <pre><code>require("js.utils").NPM.installed({list: ["bower"]},
         function(err) {
-            console.log("Bower was: ", (this.data.bower ? "" : "not"), " installed");
+            console.log("Bower was: ",
+                (this.data.bower ? "" : "not"),
+                " installed");
         });
 </code></pre>
 
 ### Template
 * Compile a given template as a file or string value using underscore (Mustache Style). <br/>
-
     <pre><code>var out = require("js.utils").Template.template({
            content: "Custom content Test was loaded {{status}}.",
            name: "templateTest",
@@ -71,7 +66,6 @@ srcobj = {foo: 'foo'};
            }
        });
 </code></pre>
-
 
 ## Versions
 
