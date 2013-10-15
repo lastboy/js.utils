@@ -64,7 +64,7 @@ if (typeof exports !== 'undefined') {
 
     }
 } else {
-    define(["typedas"], function (typedasref) {
+    define(["typedAs"], function (typedasref) {
         // browser support
         _jsutilsModuleArray.internal({typedas: typedAs});
         return _jsutilsModuleArray;

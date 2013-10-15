@@ -58,7 +58,7 @@ var server = function() {
                         return;
                     }
 
-                    if (_fs.statSync(filename).isDirectory()) filename += '/index.html';
+                    if (_fs.statSync(filename).isDirectory()) filename += '/' + (config.filename || "index.html");
 
                     _fs.readFile(filename, "binary", function(err, file) {
                         if(err) {
@@ -106,6 +106,6 @@ var server = function() {
 
 }();
 
-server.start({}, function() {
+server.start({filename: process.argv[2]}, function() {
 
 });

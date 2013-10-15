@@ -115,7 +115,7 @@ if (typeof exports !== 'undefined') {
 
     }
 } else {
-    define(["typedas", "array"], function(typedasref, arrayref) {
+    define(["typedAs", "jsutilsArrayModule"], function(typedasref, arrayref) {
 
         _jsutilsModuleObject.internal({typedas: typedAs, arrayutils: arrayref});
         return _jsutilsModuleObject;

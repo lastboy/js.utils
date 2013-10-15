@@ -41,7 +41,8 @@
     "typedas": "~1.0.0",
     "underscore": "~1.5.2",
     "q": "~0.9.7",
-    "requirejs": "~2.1.8"
+    "requirejs": "~2.1.8",
+    "amdclean": "~0.2.1"
   },
   "devDependencies": {},
   "contributors": [
