@@ -29,8 +29,8 @@ requirejs.optimize({
         if (!counter) {
             counter++;
             result += "var underscore;";
-            result += fs.readFileSync("./node_modules/typedas/typedAs.js") + "\n";
-            result += fs.readFileSync("./node_modules/underscore/underscore-min.js") + "\n";
+            //result += fs.readFileSync("./node_modules/typedas/typedAs.js") + "\n";
+            //result += fs.readFileSync("./node_modules/underscore/underscore-min.js") + "\n";
         }
 
         result += require('amdclean').clean(contents);
