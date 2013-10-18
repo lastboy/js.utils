@@ -1,0 +1,33 @@
+Build all
+==============
+
+cd build
+node build.js
+
+tests:
+
+Node: npm test
+require test for the browser: run the server test: node test/web-server.js test/index-require.html
+test for the browser: node test/web-server.js test/index.html
+
+require based
+================
+
+node  node_modules/requirejs/bin/r.js -o build-require.js
+
+test for the browser:
+run the server test: node test/web-server.js test/index-require.html
+
+test for the node:
+npm test
+node clean.js
+
+Both using the same test.js file
+
+
+flat
+================
+node build-flat.js
+
+test for the browser:
+run the server test: node test/web-server.js test/index.html

@@ -70,23 +70,20 @@ srcobj = {foo: 'foo'};
 ## Versions
 
 ### 0.1.2
-Support for a none AMD browser version.
+RequireJS dependency removed.
 
-* download browser version with NO dependency, download: [jsutils-min.js](https://raw.github.com/lastboy/js.utils/master/jsutils-min.js)
+* download browser version with NO dependency, download: [jsutils-min.js](https://raw.github.com/lastboy/js.utils/master/target/jsutils-min.js)
     + Just use the following global variables:
         + jsutilsObject;
         + jsutilsArray;
         + jsutilsTemplate;
-
-* download browser version with NO dependency, download: [jsutils-require-min.js](https://raw.github.com/lastboy/js.utils/master/jsutils-require-min.js)
-    + Still need to use 'jsutilsOnReady' Listener as described below
 
 
 ### 0.0.9
 
 Support for the browser version, including:
 Object, Array and Template(w/o template file loading support)
-download: [jsutils-min.js](https://raw.github.com/lastboy/js.utils/master/jsutils-min.js)
+download: [jsutils-min.js](https://raw.github.com/lastboy/js.utils/master/target/jsutils-min.js)
 
 Assign a ready event:
 

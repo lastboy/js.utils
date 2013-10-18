@@ -11,7 +11,7 @@ jsutils.underscore = (typeof _ !== "undefined" ? _ : undefined);
 
 requirejs.optimize({
 
-    baseUrl: ".",
+    baseUrl: "../",
 
     paths: {
         "typedAs": "node_modules/typedas/typedAs",

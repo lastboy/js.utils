@@ -19,7 +19,7 @@
   ],
   "main": "jsutils",
   "scripts": {
-    "test": "node test.js"
+    "test": "node ./test/test.js"
   },
   "engines": {
     "node": ">= 0.8.0"
@@ -41,10 +41,12 @@
     "typedas": "~1.0.0",
     "underscore": "~1.5.2",
     "q": "~0.9.7",
-    "requirejs": "~2.1.8",
-    "amdclean": "~0.2.1"
+    "requirejs": "~2.1.8"
   },
-  "devDependencies": {},
+  "devDependencies": {
+      "amdclean": "~0.2.1",
+      "concat-files": "~0.1.0"
+  },
   "contributors": [
     "Arik Lewin (https://github.com/lastboy)"
   ],

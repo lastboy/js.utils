@@ -89,7 +89,7 @@ function loadTemplateTest() {
 
     _log.log(" Test 1... ");
     var out = _Template.template({
-        path: "./test",
+        path: "./",
         name: "templateTest",
         data: {
             status: "successfully"
@@ -182,8 +182,8 @@ function NPMTest() {
 
 if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
-        _log = require("./utils/Logger.js");
-        _jsutils = require("./jsutils.js");
+        _log = require("./../utils/Logger.js");
+        _jsutils = require("./../jsutils.js");
         _Object = _jsutils.Object;
         _Array = _jsutils.Array;
         _Template = _jsutils.Template;
@@ -206,25 +206,45 @@ if (typeof exports !== 'undefined') {
         NPMTest();
     }
 } else {
-    _Object = jsutilsObject;
-    _Array = jsutilsArray;
-    _log = console;
 
-    var destobj = {},
-        srcobj = {foo: 'foo', nested: [
-            {inner: [1, 1] }
-        ]};
+    function btest() {
 
-    _Object.copy(srcobj, destobj);
+        var destobj = {},
+            srcobj = {foo: 'foo', nested: [
+                {inner: [1, 1] }
+            ]};
 
-    if (!compareTest([srcobj, destobj])) {
-        console.error("[utils object test] Compare test failed for Object.copy utility");
+        _Object.copy(srcobj, destobj);
+
+        if (!compareTest([srcobj, destobj])) {
+            console.error("[utils object test] Compare test failed for Object.copy utility");
+        }
+
+        containsTest();
+
+        console.log("Running template test... ", _Template.template({
+            data: {test: "test"},
+            content: "This is a '{{test}}'"
+        }));
     }
 
-    containsTest();
+    if (typeof require !== "undefined") {
+        this.jsutilsOnReady = function(obj, arr, tpl) {
+            _Object = obj;
+            _Array = arr;
+            _Template = tpl;
+            _log = console;
 
-    console.log("Running template test... ", jsutilsTemplate.template({
-        data: {test: "test"},
-        content: "This is a '{{test}}'"
-    }));
+            btest();
+
+        };
+    } else {
+        _Object = jsutilsObject;
+        _Array = jsutilsArray;
+        _Template = jsutilsTemplate;
+        _log = console;
+
+        btest();
+    }
+
 }
