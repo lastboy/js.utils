@@ -1,93 +1,101 @@
-var os = require("os"),
-    fs = require("fs"),
-    spawn = require('child_process').spawn,
-    process1, process2,
-    command,
-    args,
+var process1, process2;
+module.exports = function(callback) {
+
+    var os = require("os"),
+        fs = require("fs"),
+        spawn = require('child_process').spawn,
+        command,
+        args,
     //requireargs = ["../node_modules/requirejs/bin/r.js", "-o", "build-require.js"],
-    requireargs = ["build-require.js"],
-    flatargs = ["build-flat.js"];
+        requireargs = ["build-require.js"],
+        flatargs = ["build-flat.js"];
 
 
-function _mv(srcpath, targetpath) {
-    var source = fs.createReadStream(srcpath);
-    var dest = fs.createWriteStream(targetpath);
+    function _mv(srcpath, targetpath, callback) {
+        var source = fs.createReadStream(srcpath);
+        var dest = fs.createWriteStream(targetpath);
 
-    source.pipe(dest);
-    source.on('end', function() {
-        fs.unlinkSync(srcpath);
-    });
-    source.on('error', function(err) {
-        console.error(err);
-    });
-}
+        source.pipe(dest);
+        source.on('end', function() {
+            fs.unlinkSync(srcpath);
+            if (callback) {
+                callback.call(this);
 
-if (os.platform() === "win32") {
-    command = "cmd";
-    args = ["/c"];
-    requireargs.unshift("node");
-    flatargs.unshift("node");
+            }
+        });
+        source.on('error', function(err) {
+            console.error(err);
+        });
+    }
 
-} else {
-    command = "node";
-    args = [];
-}
+    if (os.platform() === "win32") {
+        command = "cmd";
+        args = ["/c"];
+        requireargs.unshift("node");
+        flatargs.unshift("node");
 
-console.log("\n building require version ... ", command, args.concat(requireargs));
-process1 = spawn(command, args.concat(requireargs));
+    } else {
+        command = "node";
+        args = [];
+    }
 
-process1.stdout.on('data', function (data) {
-    console.log('stdout: ' + data);
-});
+    console.log("\n building  AMD version ... ", command, args.concat(requireargs));
+    process1 = spawn(command, args.concat(requireargs), {cwd: "./build/"});
 
-process1.stderr.on('data', function (data) {
-    console.log('stderr: ' + data);
-});
-
-process1.on('close', function (code) {
-
-    console.log('[require build] exited with code ' + code);
-
-    console.log("\n building none require version ... ");
-    process2 = spawn(command, args.concat(flatargs));
-
-    process2.stdout.on('data', function (data) {
-        console.log('stdout: ' + data);
+    process1.stdout.on('data', function (data) {
+        var buffer = new Buffer(data);
+        console.log('stdout: ', buffer.toString("utf8"));
     });
 
-    process2.stderr.on('data', function (data) {
-        console.log('stderr: ' + data);
+    process1.stderr.on('data', function (data) {
+        var buffer = new Buffer(data)
+        console.log('stderr: ', buffer.toString("utf8"));
     });
 
-    process2.on('close', function (code) {
+    process1.on('close', function (code) {
 
-        var files = [
-            "jsutils-min.js",
-            "jsutils-require-min.js"
-        ]
+        console.log('[require build] exited with code ' + code);
 
-        // copy artifact to the target folder
-        if (fs.existsSync("../target")) {
-            files.forEach(function(file) {
-                var name = "../target/" + file;
-                if (fs.existsSync(name)) {
-                    fs.unlinkSync(name);
-                }
-            });
-            //fs.unlinkSync("../target");
+        console.log("\n building none AMD version ... ");
+        process2 = spawn(command, args.concat(flatargs), {cwd: "./build/"});
 
-        } else {
-            fs.mkdirSync("../target");
-        }
-
-
-        files.forEach(function(file) {
-            var name = "../target/" + file;
-            _mv("./" + file, name);
+        process2.stdout.on('data', function (data) {
+            var buffer = new Buffer(data)
+            console.log('stdout: ', buffer.toString("utf8"));
         });
 
+        process2.stderr.on('data', function (data) {
+            var buffer = new Buffer(data)
+            console.log('stderr: ', buffer.toString("utf8"));
+        });
+
+        process2.on('close', function (code) {
+
+            var files = [
+                "jsutils-min.js",
+                "jsutils-min-all.js",
+                "jsutils-require-min.js"
+            ]
+
+            // copy artifact to the target folder
+            if (fs.existsSync("target")) {
+                files.forEach(function(file) {
+                    var name = "target/" + file;
+                    if (fs.existsSync(name)) {
+                        fs.unlinkSync(name);
+                    }
+                });
+
+            } else {
+                fs.mkdirSync(require("path").resolve("target"));
+            }
 
 
-        console.log('[none require build] exited with code ' + code);
+            files.forEach(function(file) {
+                var name = "target/" + file;
+                _mv("./build/" + file, name, callback);
+            });
+
+        });
     });
-});
+};

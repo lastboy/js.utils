@@ -89,7 +89,7 @@ function loadTemplateTest() {
 
     _log.log(" Test 1... ");
     var out = _Template.template({
-        path: "./",
+        path: "./test",
         name: "templateTest",
         data: {
             status: "successfully"
@@ -137,7 +137,7 @@ function NPMTest() {
      *  Test for NPM info & installed methods
      *
      */
-    _jsutils.NPM.info({global: false, details: true, debug: 1, list: ["typedas"]}, function (err) {
+    _jsutils.NPM.info({global: false, details: true, debug: 0, list: ["typedas"]}, function (err) {
         console.log("> ... Test 1, get info details ");
         var data = this.data;
         data.forEach(function (item) {
@@ -153,7 +153,7 @@ function NPMTest() {
      *  Test for NPM info & installed methods
      *
      */
-    _jsutils.NPM.info({global: false, details: true, debug: 1}, function (err) {
+    _jsutils.NPM.info({global: false, details: true, debug: 0}, function (err) {
         console.log("> ... Test 2, get info details ");
         var data = this.data;
         data.forEach(function (item) {
@@ -165,7 +165,7 @@ function NPMTest() {
     });
 
 
-    _jsutils.NPM.installed({list: ["bower"], debug: 1, depth: "10"}, function (err) {
+    _jsutils.NPM.installed({list: ["bower"], debug: 0, depth: "10"}, function (err) {
         console.log("> ... Test 3, check if bower installed locally");
         console.log(this);
     });

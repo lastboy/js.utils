@@ -39,7 +39,7 @@ requirejs.optimize({
 
     findNestedDependencies: true,
     wrap: false,
-    optimize: 'none',
+//    optimize: 'none',
 
     out: "jsutils-min.js",
     name: "jsutilsweb",
@@ -58,3 +58,13 @@ requirejs.optimize({
     console.log(err);
 });
 
+
+//var concat = require('concat-files');
+//concat([
+//    '../node_modules/typedas/typedAs.js',
+//    "../node_modules/underscore/underscore-min.js",
+//    'jsutils-min.js'
+//
+//], 'jsutils-min-all.js', function () {
+//    console.log('jsutils-min-all.js created');
+//});

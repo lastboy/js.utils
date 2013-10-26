@@ -72,12 +72,17 @@ srcobj = {foo: 'foo'};
 ### 0.1.2
 RequireJS dependency removed.
 
-* download browser version with NO dependency, download: [jsutils-min.js](https://raw.github.com/lastboy/js.utils/master/target/jsutils-min.js)
-    + Just use the following global variables:
+* download the browser version
+    + with NO dependencies: [jsutils-min.js](https://raw.github.com/lastboy/js.utils/master/target/jsutils-min.js)
+    + with dependencies: [jsutils-min-all.js](https://raw.github.com/lastboy/js.utils/master/target/jsutils-min-all.js)
+* Usage
+    + js.utils global variables for the web:
         + jsutilsObject;
         + jsutilsArray;
         + jsutilsTemplate;
 
+* Fixes for NPM package including:
+    + JSON object sometimes failed to parse the npm list
 
 ### 0.0.9
 

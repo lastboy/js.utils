@@ -10,7 +10,7 @@ var _spawn = require('child_process'),
  * @returns {boolean} in case running OS is linux return true else false
  */
 function isLinux() {
-    return (_os.platform() == "linux");
+    return (_os.platform() == "linux" || _os.platform() == "darwin");
 }
 
 module.exports = function () {
@@ -65,7 +65,8 @@ module.exports = function () {
             args = config.args,
             process,
             isdetails = config.details,
-            callback = config.callback;
+            callback = config.callback,
+            datavar = "";
 
         if (isLinux()) {
             process = _spawn.spawn(command, config.args);
@@ -81,27 +82,16 @@ module.exports = function () {
         if (process) {
 
             process.stdout.on('data', function (data) {
+
                 if (data) {
-//                    if (config.debug) {
-//                        _log.log("\n> running command: npm ", config.args.join(" "));
-//
-//                    } else {
-//                        _log.log("\n>");
-//                    }
-
-                    try {
-                        listobj = JSON.parse(data);
-
-                    } catch (e) {
-                        _log.error("[js.utils.NPM info] Error occurred while looking for the package: ", e);
-                    }
+                    datavar += (new Buffer(data).toString("utf8"));
                 }
             });
 
             process.stderr.on('data', function (data) {
                 var buf, err;
 
-                if (data) {
+                if (data && config.debug) {
                     buf = new Buffer(data);
                     err = buf.toString('utf8');
                     if (err) {
@@ -123,9 +113,26 @@ module.exports = function () {
             process.on('close', function (code) {
                 var infos;
 
-                if (listobj) {
-                    infos = _process(listobj, isdetails, config.list);
-                    callback.call(infos);
+                if (datavar) {
+                    if (config.debug) {
+                        console.log("JSON Tree: ", datavar);
+                    }
+
+                    try {
+                        listobj = JSON.parse(datavar);
+
+                    } catch (e) {
+                        if (config.debug) {
+                            console.error(e);
+                        }
+                    }
+
+                    if (listobj) {
+                        infos = _process(listobj, isdetails, config.list);
+                        callback.call(infos);
+                    }
+                } else {
+                    console.error("[js.utils NPM] Due to errors, failed to parse the JSON tree (set debug to 1 for more details)");
                 }
             });
         }
