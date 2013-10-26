@@ -74,7 +74,11 @@ RequireJS dependency removed.
 
 * download the browser version
     + with NO dependencies: [jsutils-min.js](https://raw.github.com/lastboy/js.utils/master/target/jsutils-min.js)
+        + manually download
+            + [Underscore](http://underscorejs.org/)
+            + [Typedas](https://raw.github.com/alexduloz/typedAs/gh-pages/typedAs.js)
     + with dependencies: [jsutils-min-all.js](https://raw.github.com/lastboy/js.utils/master/target/jsutils-min-all.js)
+        + typedas and underscore already inside
 * Usage
     + js.utils global variables for the web:
         + jsutilsObject;
