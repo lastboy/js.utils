@@ -34,7 +34,7 @@ var _stub = function () {
     };
 
 
-    _consoleimpl = {log: _impl.log, error: _impl, warn: _impl.warn};
+    _consoleimpl = {log: _impl.log, error: _impl.error, warn: _impl.warn};
     _consolestub = {log: _stub, error: _stub, warn: _stub};
 
 
