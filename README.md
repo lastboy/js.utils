@@ -18,7 +18,7 @@ js.utils
     + document  - Get XML, XSD document(s)
     + validate  - Validate an XML with a given XSD
     + Note: the libxmljs module is optional dependency since you need to
-            follow a specific installation especially for windows)
+            follow a specific installation (especially for windows)
 
 ## Usage
 
@@ -76,8 +76,8 @@ srcobj = {foo: 'foo'};
 * Validate an XML against an XSD with a given string content
      <pre><code>require("js.utils").XML.validate({
         content: {
-            xml: '<?xml version="1.0" encoding="UTF-8" ?><test_elt>Test String</test_elt>',
-            xsd: '<?xml version="1.0" encoding="UTF-8" ?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:element name="test_elt" type="xs:string"/></xs:schema>'
+            xml: '&lt;?xml version="1.0" encoding="UTF-8" ?&gt;&lt;test_elt&gt;Test String&lt;/test_elt&gt;',
+            xsd: '&lt;?xml version="1.0" encoding="UTF-8" ?&gt;&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" &gt;&lt;xs:element name="test_elt" type="xs:string"/&gt;&lt;/xs:schema&gt;'
         }
     });
 </code></pre>
@@ -85,8 +85,8 @@ srcobj = {foo: 'foo'};
 * Get a document of an XML/XSD with a given string content
      <pre><code>require("js.utils").XML.getDocument({
         content: {
-            xml: '<?xml version="1.0" encoding="UTF-8" ?><test_elt>Test String</test_elt>',
-            xsd: '<?xml version="1.0" encoding="UTF-8" ?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:element name="test_elt" type="xs:string"/></xs:schema>'
+            xml: '&lt;?xml version="1.0" encoding="UTF-8" ?&gt;&lt;test_elt&lt;Test String&gt;/test_elt&gt;',
+            xsd: '&lt;?xml version="1.0" encoding="UTF-8" ?&gt;&lt;xs:schema mlns:xs="http://www.w3.org/2001/XMLSchema" &gt;&lt;xs:element name="test_elt" type="xs:string"/&gt;&lt;/xs:schema&gt;'
         }
     });
 </code></pre>
