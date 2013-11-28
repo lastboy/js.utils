@@ -138,7 +138,7 @@ function NPMTest() {
      *
      */
     _jsutils.NPM.info({global: false, details: true, debug: 0, list: ["typedas"]}, function (err) {
-        console.log("> ... Test 1, get info details ");
+        console.log("\n> ... Test 1, get info details ");
         var data = this.data;
         data.forEach(function (item) {
             if (item) {
@@ -154,7 +154,7 @@ function NPMTest() {
      *
      */
     _jsutils.NPM.info({global: false, details: true, debug: 0}, function (err) {
-        console.log("> ... Test 2, get info details ");
+        console.log("\n> ... Test 2, get info details ");
         var data = this.data;
         data.forEach(function (item) {
             if (item) {
@@ -166,19 +166,81 @@ function NPMTest() {
 
 
     _jsutils.NPM.installed({list: ["bower"], debug: 0, depth: "10"}, function (err) {
-        console.log("> ... Test 3, check if bower installed locally");
+        console.log("\n> ... Test 3, check if bower installed locally");
         console.log(this);
     });
 
 
     _jsutils.NPM.installed({list: ["typedas"], depth: "-1"}, function (err) {
-        console.log("> ... Test 4, check if typedas installed");
+        console.log("\n> ... Test 4, check if typedas installed");
         console.log(this);
     });
 
 
 }
 
+
+function XMLTest() {
+
+    console.log("\n>### ... XML Test string 1, true ");
+    _jsutils.init({log: true});
+
+    /**
+     *  Test for NPM info & installed methods
+     *
+     */
+    console.log("XML validation test: result: ", _jsutils.XML.validate({
+        content: {
+            xml: '<?xml version="1.0" encoding="UTF-8" ?><test_elt>Test String</test_elt>',
+            xsd: '<?xml version="1.0" encoding="UTF-8" ?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:element name="test_elt" type="xs:string"/></xs:schema>'
+        }
+    }));
+
+
+    console.log("\n>### ... XML Test int 2, true ");
+    _jsutils.init({log: true});
+
+    /**
+     *  Test for NPM info & installed methods
+     *
+     */
+    console.log("XML validation test: result: ", _jsutils.XML.validate({
+        content: {
+            xml: '<?xml version="1.0" encoding="UTF-8" ?><test_elt>666</test_elt>',
+            xsd: '<?xml version="1.0" encoding="UTF-8" ?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:element name="test_elt" type="xs:int"/></xs:schema>'
+        }
+    }));
+
+
+    console.log("\n>### ... XML Test int 3, false ");
+    _jsutils.init({log: true});
+
+    /**
+     *  Test for NPM info & installed methods
+     *
+     */
+    console.log("XML validation test: result: ", _jsutils.XML.validate({
+        content: {
+            xml: '<?xml version="1.0" encoding="UTF-8" ?><test_elt>false</test_elt>',
+            xsd: '<?xml version="1.0" encoding="UTF-8" ?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:element name="test_elt" type="xs:int"/></xs:schema>'
+        }
+    }));
+
+
+    console.log("\n>### ... XML Test Junit 4, true ");
+    _jsutils.init({log: true});
+
+    /**
+     *  Test for NPM info & installed methods
+     *
+     */
+    console.log("XML validation test: result: ", _jsutils.XML.validate({
+        file: {
+            xml: require('path').join(__dirname, '../test/resources/TESTS-TestSuites.xml'),
+            xsd: require('path').join(__dirname, '../test/resources/junit4.xsd')
+        }
+    }));
+}
 
 if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
@@ -204,6 +266,8 @@ if (typeof exports !== 'undefined') {
         loadTemplateTest();
 
         NPMTest();
+
+        XMLTest();
     }
 } else {
 
