@@ -14,12 +14,6 @@ js.utils
 * Template
     + Load and compile a template with underscore
 
-* XML - powered by libxmljs
-    + document  - Get XML, XSD document(s)
-    + validate  - Validate an XML with a given XSD
-    + Note: the libxmljs module is optional dependency since you need to
-            follow a specific installation (especially for windows)
-
 ## Usage
 
 ### Initial settings
@@ -70,34 +64,6 @@ srcobj = {foo: 'foo'};
                status: "successfully"
            }
        });
-</code></pre>
-
-### XML
-* Validate an XML against an XSD with a given string content
-     <pre><code>require("js.utils").XML.validate({
-        content: {
-            xml: '&lt;?xml version="1.0" encoding="UTF-8" ?&gt;&lt;test_elt&gt;Test String&lt;/test_elt&gt;',
-            xsd: '&lt;?xml version="1.0" encoding="UTF-8" ?&gt;&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" &gt;&lt;xs:element name="test_elt" type="xs:string"/&gt;&lt;/xs:schema&gt;'
-        }
-    });
-</code></pre>
-
-* Get a document of an XML/XSD with a given string content
-     <pre><code>require("js.utils").XML.getDocument({
-        content: {
-            xml: '&lt;?xml version="1.0" encoding="UTF-8" ?&gt;&lt;test_elt&lt;Test String&gt;/test_elt&gt;',
-            xsd: '&lt;?xml version="1.0" encoding="UTF-8" ?&gt;&lt;xs:schema mlns:xs="http://www.w3.org/2001/XMLSchema" &gt;&lt;xs:element name="test_elt" type="xs:string"/&gt;&lt;/xs:schema&gt;'
-        }
-    });
-</code></pre>
-
-* Get a document of an XML/XSD with a given file content
-     <pre><code>require("js.utils").XML.getDocument({
-         file: {
-                  xml: require('path').join(__dirname, '../test/resources/TESTS-TestSuites.xml'),
-                  xsd: require('path').join(__dirname, '../test/resources/junit4.xsd')
-         }
-    });
 </code></pre>
 
 
@@ -209,28 +175,6 @@ Or you can use js.utils global variables (when the page done loading):
         + path     {String} The full path where the templates exists (optional) e.g. /home/../test.tpl
         + content  {String} The string content instead of the file content (optional in case name exists & overrides the file content)
         + data     {Object} The data object properties (see underscore template)
-
-### XML
-
-<p>XML management using libxmljs</p>
-
-* getDocument(config)
-    + Config properties: (file path or string content can be passed and xml or/and xsd argument)
-        + file {String} The path to the xsd file
-            + xml The xml content path
-            + xsd The xsd content path
-        + content {String} The content to be parsed
-            + xml The xml string content
-            + xsd The xsd string content
-
-* validate(config)
-    + Config properties: (file path or string content can be passed)
-        + file {String} The path to the xsd file
-            + xml The xml content path
-            + xsd The xsd content path
-        + content {String} The content to be parsed
-            + xml The xml string content
-            + xsd The xsd string content
 
 
 ## Behavior
