@@ -1,7 +1,7 @@
 {
     "name": "js.utils",
     "description": "General JavaScript Utilities",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "author": "Arik Lewin (https://github.com/lastboy)",
     "homepage": "https://github.com/lastboy",
     "repository": {
@@ -53,9 +53,6 @@
         "grunt-contrib-concat": "~0.3.0",
         "grunt-contrib-clean": "~0.4.0"
 
-    },
-    "optionalDependencies": {
-        "libxmljs": "~0.8.1"
     },
 
     "contributors": [

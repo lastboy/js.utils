@@ -103,6 +103,9 @@ srcobj = {foo: 'foo'};
 
 ## Versions
 
+### 0.1.4
+XML module removed
+
 ### 0.1.3
 XML module added with getting an XML/XSD document and validation functionality using the libxml package.
 

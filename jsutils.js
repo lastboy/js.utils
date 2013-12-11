@@ -9,7 +9,9 @@ module.exports = function() {
         Array: require("./utils/Array.js"),
         Template: require("./utils/Template.js"),
         NPM: require("./utils/NPM.js"),
-        XML: require("./utils/XML.js"),
+
+       // require libxmljs in case of enable
+       // XML: require("./utils/XML.js"),
 
         init: function(config) {
             if (config) {

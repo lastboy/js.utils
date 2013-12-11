@@ -267,7 +267,7 @@ if (typeof exports !== 'undefined') {
 
         NPMTest();
 
-        XMLTest();
+        // XMLTest();
     }
 } else {
 
