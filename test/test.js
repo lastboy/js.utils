@@ -273,16 +273,28 @@ function TaskTest() {
     }
 }
 
-/*
-    E2E Tasks
- */
-function E2ETaskTest() {
+function TaskConcat() {
 
-    console.log("\n>### ... Task Test e2e 2, true ");
+    console.log("\n>### ... Task Test concat 2, true ");
     _jsutils.init({log: true});
 
     console.log( "Minified file : result: ",
-        _jsutils.Task.e2e({
+        _jsutils.Task.concat({
+            src: ["./test/resources/test1.js","./test/resources/test2.js" ]
+        })
+    );
+}
+
+/*
+    E2E Prod Tasks
+ */
+function ProdTaskTest() {
+
+    console.log("\n>### ... Task Test e2e prod  3, true ");
+    _jsutils.init({log: true});
+
+    console.log( "Minified file : result: ",
+        _jsutils.Task.prod({
             src: ["./test/resources/test1.js","./test/resources/test2.js" ],
             jshint: {
                 opt: {
@@ -305,6 +317,24 @@ function E2ETaskTest() {
     );
 }
 
+/*
+ E2E Dev Tasks
+ */
+function DevTaskTest() {
+
+    console.log("\n>### ... Task Test e2e Dev 4, true ");
+
+    console.log( "Dev : result: ",
+        _jsutils.Task.dev({
+            src: ["./test/resources/test1.js","./test/resources/test2.js" ],
+            out: {
+                banner: "This is a test unminified content",
+                name: "testx-min.js",
+                path: "./test/out"
+            }
+        })
+    );
+}
 
 if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
@@ -336,7 +366,11 @@ if (typeof exports !== 'undefined') {
 
         TaskTest();
 
-        E2ETaskTest();
+        TaskConcat();
+
+        ProdTaskTest();
+
+        DevTaskTest();
     }
 } else {
 
