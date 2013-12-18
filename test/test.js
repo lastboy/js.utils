@@ -2,7 +2,8 @@ var _log,
     _jsutils,
     _Object,
     _Array,
-    _Template;
+    _Template,
+    _Task;
 
 
 function compareTest(objects) {
@@ -242,13 +243,77 @@ function XMLTest() {
     }));
 }
 
+/*
+    Single API Tasks calls
+ */
+function TaskTest() {
+
+    console.log("\n>### ... Task Test minify 1, true ");
+    _jsutils.init({log: true});
+
+
+    var result = _jsutils.Task.jshint({
+        code: require("fs").readFileSync("./test/resources/test1.js", "utf8")
+    });
+
+    result = _jsutils.Task.jshint({
+        src: ["./test/resources/test1.js"]
+    });
+
+    console.log( "JShint file : result: ",
+        result, "test: ", result.success
+    );
+
+    if (result.success) {
+        console.log( "Minified file : result: ",
+            _jsutils.Task.minify({
+                src: ["./test/resources/test1.js","./test/resources/test2.js" ]
+            })
+        );
+    }
+}
+
+/*
+    E2E Tasks
+ */
+function E2ETaskTest() {
+
+    console.log("\n>### ... Task Test e2e 2, true ");
+    _jsutils.init({log: true});
+
+    console.log( "Minified file : result: ",
+        _jsutils.Task.e2e({
+            src: ["./test/resources/test1.js","./test/resources/test2.js" ],
+            jshint: {
+                opt: {
+                    "strict": false,
+                    "curly": true,
+                    "eqeqeq": true,
+                    "immed": false,
+                    "latedef": true,
+                    "newcap": false,
+                    "noarg": true,
+                    "sub": true,
+                    "undef": true,
+                    "boss": true,
+                    "eqnull": true,
+                    "node": true,
+                    "es5": false
+                }
+            }
+        })
+    );
+}
+
+
 if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
         _log = require("./../utils/Logger.js");
         _jsutils = require("./../jsutils.js");
         _Object = _jsutils.Object;
         _Array = _jsutils.Array;
-        _Template = _jsutils.Template;
+        _Template = _jsutils.Template,
+        _Task = _jsutils.Task;
 
         var destobj = {},
             srcobj = {foo: 'foo', nested: [
@@ -268,6 +333,10 @@ if (typeof exports !== 'undefined') {
         NPMTest();
 
         // XMLTest();
+
+        TaskTest();
+
+        E2ETaskTest();
     }
 } else {
 
