@@ -336,6 +336,36 @@ function DevTaskTest() {
     );
 }
 
+/*
+ Multi E2E Dev Tasks
+ */
+function MultiDevTaskTest() {
+
+    console.log("\n>### ... Task Test Multi e2e Dev 5, true ");
+
+    var result =  _jsutils.Task.dev([{
+        src: ["./test/resources/test1.js","./test/resources/test2.js" ],
+        out: {
+            banner: "This is a test unminified content",
+            name: "testx-min.js",
+            path: "./test/out"
+        }
+    }, {
+        src: ["./test/resources/test1.js","./test/resources/test2.js" ],
+        out: {
+            banner: "This is a test unminified content",
+            name: "testy-min.js",
+            path: "./test/out"
+        }
+    }]);
+
+    console.log( "Dev : result: ",
+            result
+    );
+}
+
+
+
 if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
         _log = require("./../utils/Logger.js");
@@ -371,6 +401,8 @@ if (typeof exports !== 'undefined') {
         ProdTaskTest();
 
         DevTaskTest();
+
+        MultiDevTaskTest();
     }
 } else {
 

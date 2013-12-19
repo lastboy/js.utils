@@ -5,21 +5,40 @@ var _jsutilsModuleTask = function () {
         _local;
 
     _local = {
+
+        /**
+         *  Configuration validation
+         *
+         *  @param config {Object} E2E configuration
+         *  @param action {String} The method to be invoked (_dev | _prod | _write)
+         *  @private
+         */
         _validate: function (config, action) {
+
+            var result = [];
 
             if (_vars.typedas.isArray(config)) {
 
                 config.forEach(function (item) {
-                    if (item && _me[action]) {
-                        _me[action](item);
+                    if (item && _local[action]) {
+                        result.push(_local[action](item));
                     }
                 });
 
+                return result;
+
             } else {
-                _local[action](config);
+                return _local[action](config);
             }
         },
 
+        /**
+         *  Write the content to a file
+         *
+         *  @param out {Object} The output configuration
+         *  @param content {String} The content to be saved
+         *  @private
+         */
         _write: function(out, content) {
 
             if (!out) {
@@ -47,6 +66,14 @@ var _jsutilsModuleTask = function () {
 
         // TODO generic code (parameters init) for _dev & _prod
 
+        /**
+         * E2E development process
+         * Files that are validated with lint (jshint) and concatinated
+         *
+         * @param config {Object} The files configuration
+         * @returns {String} The concateneted string | {Array} The concatenated strings for all the configurations
+         * @private
+         */
         _dev: function (config) {
 
             var src,
@@ -110,6 +137,14 @@ var _jsutilsModuleTask = function () {
             }
         },
 
+        /**
+         * E2E production process
+         * Files that are validated with lint (jshint), concatinated and minified (uglifyjs)
+         *
+         * @param config {Object} The files configuration
+         * @returns {String} The concateneted string | {Array} The minified strings for all the configurations
+         * @private
+         */
         _prod: function (config) {
             var src,
                 msg,
@@ -181,8 +216,17 @@ var _jsutilsModuleTask = function () {
 
         },
 
+        /**
+         * Concat single or multi files
+         *
+         * @param config {Object{ The configuration
+         *          - src {Array} Array of file(s) path | {String} Single file path
+         *          -
+         *
+         * @returns {string}
+         */
         concat: function (config) {
-            var idx = 0, size, item, itemCode,
+            var idx = 0, size, item,
                 src = ("src" in config && config.src),
                 contentList = [];
 
@@ -204,6 +248,16 @@ var _jsutilsModuleTask = function () {
 
         },
 
+        /**
+         * Lint the given files
+         *
+         * @param config {object} The configuration
+         *          - src {Object} The file to be linted (overrides the code property)
+         *          - code {String} The content string to be linted (optional)
+         *          - opt {Object} The jshint parameters
+         *
+         * @returns {{success: *, errors: (*|Array|Array)}}
+         */
         jshint: function (config) {
 
             function codeProcess(code, opt) {
@@ -261,19 +315,17 @@ var _jsutilsModuleTask = function () {
         /**
          *  Minify given files / stream
          *
-         * @param config The configuration
+         * @param config {Object} The configuration
+         *          -  src {Array|String} The given file(s) to be minified
          *
+         * @return {String} The minified string
          */
         minify: function (config) {
 
             var src,
-                suffix = "-min",
                 result;
 
             if (config) {
-                if ("suffix" in config) {
-                    suffix = config.suffix;
-                }
                 if ("src" in config) {
                     src = config.src;
                     if (src) {
@@ -290,11 +342,11 @@ var _jsutilsModuleTask = function () {
         },
 
         dev: function (config) {
-            _local._validate(config, "_dev");
+            return _local._validate(config, "_dev");
         },
 
         prod: function(config) {
-            _local._validate(config, "_prod");
+            return _local._validate(config, "_prod");
         }
 
     };

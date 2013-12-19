@@ -14,6 +14,10 @@ js.utils
 * Template
     + Load and compile a template with underscore
 
+* Task
+    + Lint, concat and/or minify a set of resources (currently JS file type supported)
+
+
 ## Usage
 
 ### Initial settings
@@ -64,6 +68,38 @@ srcobj = {foo: 'foo'};
                status: "successfully"
            }
        });
+</code></pre>
+
+### Task
+* Prepare your resources for Development (dev api) and/or Production (prod api) with <br/>
+    JSHint & UglifyJS
+    <pre><code>
+        require("js.utils").Task.dev([{
+               src: ["./test/resources/test1.js","./test/resources/test2.js" ],
+               out: {
+                   banner: "This is a test minified content",
+                   name: "testx-min.js",
+                   path: "./test/out"
+               }
+           }, {
+               src: ["./test/resources/test1.js","./test/resources/test2.js" ],
+               out: {
+                   banner: "This is a test minified content",
+                   name: "testy-min.js",
+                   path: "./test/out"
+               }
+           }]);
+</code></pre>
+
+* Or use separate API minify/jshint/concat <br/>
+    <pre><code>
+        require("js.utils").Task.jshint({
+                src: ["./test/resources/test1.js"]
+            });
+
+        require("js.utils").Task.minify({
+                src: ["./test/resources/test1.js","./test/resources/test2.js" ]
+            })
 </code></pre>
 
 
@@ -176,6 +212,10 @@ Or you can use js.utils global variables (when the page done loading):
         + content  {String} The string content instead of the file content (optional in case name exists & overrides the file content)
         + data     {Object} The data object properties (see underscore template)
 
+### Task
+
+<p>Prepare your project to development / production using JSHint & UglifyJS</p>
+TBD
 
 ## Behavior
 
