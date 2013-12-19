@@ -105,6 +105,9 @@ srcobj = {foo: 'foo'};
 
 ## Versions
 
+### 0.1.5
+Task module added to prepare your project for development / production, using JSHint & UglifyJS
+
 ### 0.1.4
 XML module removed
 
@@ -214,7 +217,7 @@ Or you can use js.utils global variables (when the page done loading):
 
 ### Task
 
-<p>Prepare your project to development / production using JSHint & UglifyJS</p>
+<p>Prepare your project for development / production using, JSHint & UglifyJS</p>
 TBD
 
 ## Behavior
