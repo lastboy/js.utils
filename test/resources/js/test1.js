@@ -6,6 +6,7 @@ function test() {
 
 
     this.getX1 = function() {
+        console.log(document.location.href);
         return this.x1;
     };
 
