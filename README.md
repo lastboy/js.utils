@@ -4,8 +4,9 @@ js.utils
 <p>Utilities for:</p>
 
 * Object
-    + copy/clone object
-    + contains  - validate if an object contains a given value
+    + copy/clone an object
+    + contains  - Validates if an object contains a given value
+    + empty     - Validates is the object empty
 
 * NPM
     + info      - Get information about the list of installed packages
@@ -32,8 +33,12 @@ srcobj = {foo: 'foo'};
   require("js.utils").Object.copy(srcobj, destobj);
 </code></pre>
 
-* Validate if 'foo' exists in a given array <br/>
+* Validates if 'foo' exists in a given array <br/>
     <pre><code>require("js.utils").Object.contains(['foo'], 'foo');
+</code></pre>
+
+* Validates if an object is empty <br/>
+    <pre><code>require("js.utils").Object.empty({});
 </code></pre>
 
 ### NPM
@@ -104,6 +109,10 @@ srcobj = {foo: 'foo'};
 
 
 ## Versions
+
+### 0.1.6
+Object Module - 'empty' method was added
+Task Module   - expression path match added (e.g. ./**/*.js)
 
 ### 0.1.5
 Task module added to prepare your project for development / production, using JSHint & UglifyJS
