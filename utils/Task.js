@@ -32,6 +32,60 @@ var _jsutilsModuleTask = function () {
             }
         },
 
+        _globmatch: function (config) {
+
+            var lsrc, match,
+                src = config.src,
+                opt = ("opt" in config ? config.opt : {});
+
+            function __match(item, opt) {
+                var match = _vars.globmatch.sync(item, opt);
+                if (!match) {
+                    console.warn("[js.utils Task match] Failed match path: ", item, " , skip");
+                }
+
+                return match;
+            }
+
+            if (src) {
+                if (_vars.typedas.isArray(src)) {
+                    lsrc = [];
+                    src.forEach(function (item) {
+                        var match;
+
+                        if (item) {
+                            try {
+                                match = __match(item, opt);
+                                if (match) {
+                                    lsrc = lsrc.concat(match);
+                                }
+
+                            } catch (e) {
+                                console.warn("[js.utils Task match] Failed to resolve path: ", item, "with errors: ", e);
+                                lsrc.push(item);
+                            }
+                        }
+                    });
+
+                } else if (_vars.typedas.isString(src)) {
+
+                    try {
+                        match = __match(src, opt);
+                        if (match) {
+                            lsrc = match;
+                        }
+
+                    } catch (e) {
+                        console.warn(" Failed to resolve path: ", src, "with errors: ", e);
+                        lsrc = src;
+                    }
+                }
+            }
+
+            return lsrc;
+
+        },
+
         /**
          *  Write the content to a file
          *
@@ -39,7 +93,7 @@ var _jsutilsModuleTask = function () {
          *  @param content {String} The content to be saved
          *  @private
          */
-        _write: function(out, content) {
+        _write: function (out, content) {
 
             if (!out) {
                 _vars.log.warn("\n [js.utils write file] no valid output configuration");
@@ -231,6 +285,8 @@ var _jsutilsModuleTask = function () {
                 contentList = [];
 
             if (src) {
+                src = _local._globmatch({src: src});
+
                 if (_vars.typedas.isArray(src)) {
                     size = src.length;
                     for (idx = 0; idx < size; idx++) {
@@ -260,13 +316,13 @@ var _jsutilsModuleTask = function () {
          */
         jshint: function (config) {
 
-            function codeProcess(code, opt) {
-                return _vars.jshint(code, opt, { assert: true });
+            function codeProcess(code, opt, globals) {
+                return _vars.jshint(code, opt, globals);
             }
 
             var idx = 0, size, item, itemCode,
                 validcode,
-                code, opt = {
+                code, globals, opt = {
                     "strict": false,
                     "curly": true,
                     "eqeqeq": true,
@@ -285,8 +341,11 @@ var _jsutilsModuleTask = function () {
             src = ("src" in config && config.src);
             code = ("code" in config && config.code);
             opt = ( ("opt" in config && config.opt) ? config.opt : opt);
+            globals = ( ("globals" in config && config.globals) ? config.globals : undefined);
 
             if (src) {
+                src = _local._globmatch({src: src});
+
                 if (_vars.typedas.isArray(src)) {
                     code = null;
                     size = src.length;
@@ -294,7 +353,7 @@ var _jsutilsModuleTask = function () {
                         item = src[idx];
                         if (item) {
                             itemCode = _vars.fs.readFileSync(item, "utf8");
-                            validcode = codeProcess(itemCode, opt);
+                            validcode = codeProcess(itemCode, opt, globals);
                             if (!validcode) {
                                 break;
                             }
@@ -329,6 +388,7 @@ var _jsutilsModuleTask = function () {
                 if ("src" in config) {
                     src = config.src;
                     if (src) {
+                        src = _local._globmatch({src: src});
                         result = _vars.uglify.minify(src)
                     }
                 }
@@ -337,7 +397,7 @@ var _jsutilsModuleTask = function () {
             return result;
         },
 
-        write: function(config) {
+        write: function (config) {
             _local._write(config);
         },
 
@@ -345,7 +405,7 @@ var _jsutilsModuleTask = function () {
             return _local._validate(config, "_dev");
         },
 
-        prod: function(config) {
+        prod: function (config) {
             return _local._validate(config, "_prod");
         }
 
@@ -364,7 +424,8 @@ if (typeof exports !== 'undefined') {
             uglify: require("uglify-js"),
             jshint: require("jshint").JSHINT,
             log: require("./Logger.js"),
-            path: require("path")
+            path: require("path"),
+            globmatch: require("glob")
         });
         module.exports = _jsutilsModuleTask;
 
