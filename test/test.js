@@ -52,12 +52,25 @@ function containsTest() {
 
     _log.log("\n Testing contains objects... ");
 
-    var test = ["1", 2, "3", [
+    var empty1 = {}, empty2 = {x:1}, empty3, Empty = function(){}, test = ["1", 2, "3", [
             {foo: [1, 2]}
         ]],
         objutils = _Object,
         testmsg = " Contains objects: " + JSON.stringify(test) + ",  ";
 
+    if (objutils.empty(empty1)) {
+        _log.log(" Empty object test 1 - empty " + " - passed");
+    }
+
+    if (!objutils.empty(empty2)) {
+        _log.log(" Empty object test 2 - not empty " + " - passed");
+    }
+
+    empty3 = new Empty();
+    Empty.prototype.x = 1;
+    if (objutils.empty(empty3)) {
+        _log.log(" Empty object test 3 - empty " + " - passed \n");
+    }
 
     if (objutils.contains(test, [
         {foo: [1, 2]}
@@ -253,11 +266,11 @@ function TaskTest() {
 
 
     var result = _jsutils.Task.jshint({
-        code: require("fs").readFileSync("./test/resources/test1.js", "utf8")
+        code: require("fs").readFileSync("./test/resources/js/test1.js", "utf8")
     });
 
     result = _jsutils.Task.jshint({
-        src: ["./test/resources/test1.js"]
+        src: ["./test/resources/**/test1.js"]
     });
 
     console.log( "JShint file : result: ",
@@ -267,7 +280,7 @@ function TaskTest() {
     if (result.success) {
         console.log( "Minified file : result: ",
             _jsutils.Task.minify({
-                src: ["./test/resources/test1.js","./test/resources/test2.js" ]
+                src: ["./test/resources/**/test1.js","./test/resources/js/test2.js" ]
             })
         );
     }
@@ -280,7 +293,7 @@ function TaskConcat() {
 
     console.log( "Minified file : result: ",
         _jsutils.Task.concat({
-            src: ["./test/resources/test1.js","./test/resources/test2.js" ]
+            src: ["./test/resources/**/test1.js","./test/resources/js/test2.js" ]
         })
     );
 }
@@ -295,8 +308,9 @@ function ProdTaskTest() {
 
     console.log( "Minified file : result: ",
         _jsutils.Task.prod({
-            src: ["./test/resources/test1.js","./test/resources/test2.js" ],
+            src: ["./test/resources/**/test1.js","./test/resources/js/test2.js" ],
             jshint: {
+
                 opt: {
                     "strict": false,
                     "curly": true,
@@ -311,7 +325,12 @@ function ProdTaskTest() {
                     "eqnull": true,
                     "node": true,
                     "es5": false
+                },
+
+                globals: {
+                    document: true
                 }
+
             }
         })
     );
@@ -326,11 +345,16 @@ function DevTaskTest() {
 
     console.log( "Dev : result: ",
         _jsutils.Task.dev({
-            src: ["./test/resources/test1.js","./test/resources/test2.js" ],
+            src: ["./test/resources/**/test1.js","./test/resources/js/test2.js" ],
             out: {
                 banner: "This is a test unminified content",
                 name: "testx-min.js",
                 path: "./test/out"
+            },
+            jshint: {
+                globals: {
+                    document: true
+                }
             }
         })
     );
@@ -344,18 +368,28 @@ function MultiDevTaskTest() {
     console.log("\n>### ... Task Test Multi e2e Dev 5, true ");
 
     var result =  _jsutils.Task.dev([{
-        src: ["./test/resources/test1.js","./test/resources/test2.js" ],
+        src: ["./test/resources/**/test1.js","./test/resources/js/test2.js" ],
         out: {
             banner: "This is a test unminified content",
             name: "testx-min.js",
             path: "./test/out"
+        },
+        jshint: {
+            globals: {
+                document: true
+            }
         }
     }, {
-        src: ["./test/resources/test1.js","./test/resources/test2.js" ],
+        src: ["./test/resources/**/test1.js","./test/resources/js/test2.js" ],
         out: {
             banner: "This is a test unminified content",
             name: "testy-min.js",
             path: "./test/out"
+        },
+        jshint: {
+            globals: {
+                document: true
+            }
         }
     }]);
 
