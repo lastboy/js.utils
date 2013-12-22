@@ -300,6 +300,39 @@ var _jsutilsModuleObject = function () {
                     }
                 }
             }
+        },
+
+        /**
+         * Is the object empty ?
+         *
+         * @param srcobj {Object} The object reference
+         * @returns {boolean} If the object is null || undefined || has no values {} return true or else false
+         */
+        empty: function(srcobj) {
+
+            var key,
+                n= 0,
+                result = false;
+
+            if (!srcobj) {
+                return true;
+            }
+
+            if (Object.keys) {
+                result = (Object.keys(srcobj).length === 0);
+
+            } else {
+                for (key in srcobj) {
+                    if (srcobj.hasOwnProperty(key)) {
+                        n++;
+                        break;
+                    }
+                }
+
+                result = (n === 0);
+            }
+
+            return result;
         }
 
     };
