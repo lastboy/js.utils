@@ -110,6 +110,10 @@ srcobj = {foo: 'foo'};
 
 ## Versions
 
+### 0.1.7
+Object Module - 'resolve' method was added
+Task Module   - file name added to the jshint's error output
+
 ### 0.1.6
 Object Module - 'empty' method was added
 Task Module   - expression path match added (e.g. ./**/*.js)
@@ -179,6 +183,17 @@ Or you can use js.utils global variables (when the page done loading):
 * contains(obj, value)
     + obj {Object} The referenced object
     + value {Object} The value to be searched
+
+<p>Is the object empty ?</p>
+
+* empty(srcobj)
+    + srcobj {Object} The object reference
+returns {boolean} If the object is [null || undefined || has no values {}] return true or else false
+
+<p>Inspect a given string and try to resolve its object</p>
+
+* resolve(srcobj)
+    + srcobj {Object} The object reference
 
 
 ### NPM
