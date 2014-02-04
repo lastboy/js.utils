@@ -110,6 +110,9 @@ srcobj = {foo: 'foo'};
 
 ## Versions
 
+### 0.1.8
+Task Module   - Minify writer fix, for prod task
+
 ### 0.1.7
 Object Module - 'resolve' method was added
 Task Module   - file name added to the jshint's error output
