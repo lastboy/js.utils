@@ -131,6 +131,38 @@ var _jsutilsModuleObject = function () {
             }
 
             return result;
+        },
+
+        /**
+         * Inspect a given string and try to resolve its object
+         *
+         * @param obj The reference object
+         * @param query The query to apply over the referenced object
+         */
+        resolve: function (obj, query) {
+
+            if (!obj || !query) {
+                return obj;
+            }
+
+            var keys = query.split("."),
+                size = keys.length,
+                counter = 0,
+                key;
+
+            while (counter < size) {
+                key = keys[counter];
+                if (key && obj[key]) {
+                    obj = obj[key];
+                    counter++;
+                } else {
+                    counter = size;
+                    console.warn("[js.utils Object] resolve failed: ", query);
+                    return null;
+                }
+            }
+
+            return obj;
         }
 
     };
