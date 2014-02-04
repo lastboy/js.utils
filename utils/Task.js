@@ -114,7 +114,9 @@ var _jsutilsModuleTask = function () {
                 }
                 _vars.fs.writeFileSync(file, (banner ? [banner, content].join("") : content));
             } else {
-                _vars.log.warn("\n [js.utils write file] no valid file name or content");
+                if (!file) {
+                    _vars.log.warn("\n [js.utils write file] no valid file: " + file);
+                }
             }
         },
 
@@ -176,6 +178,7 @@ var _jsutilsModuleTask = function () {
                 result.jshint = _me.jshint(jshint);
 
                 if (!result.jshint.success) {
+                    console.error("\n jshint errors: ", jshint.src);
                     console.error(result.jshint.errors);
                     return undefined;
                 }
@@ -246,6 +249,7 @@ var _jsutilsModuleTask = function () {
                 result.jshint = _me.jshint(jshint);
 
                 if (!result.jshint.success) {
+                    console.error("\n jshint errors: ", jshint.src);
                     console.error(result.jshint.errors);
                     return undefined;
                 }
