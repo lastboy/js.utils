@@ -259,7 +259,7 @@ var _jsutilsModuleTask = function () {
             if (minify) {
                 output = _me.minify(minify);
                 if (out) {
-                    _local._write(out, output);
+                    _local._write(out, output.code);
                 }
                 return output;
             }

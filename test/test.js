@@ -309,8 +309,12 @@ function ProdTaskTest() {
     console.log( "Minified file : result: ",
         _jsutils.Task.prod({
             src: ["./test/resources/**/test1.js","./test/resources/js/test2.js" ],
+            out: {
+                banner: "This is a test minified content",
+                name: "testx-min.js",
+                path: "./test/out"
+            },
             jshint: {
-
                 opt: {
                     "strict": false,
                     "curly": true,
@@ -348,7 +352,7 @@ function DevTaskTest() {
             src: ["./test/resources/**/test1.js","./test/resources/js/test2.js" ],
             out: {
                 banner: "This is a test unminified content",
-                name: "testx-min.js",
+                name: "test-unmin.js",
                 path: "./test/out"
             },
             jshint: {
@@ -371,7 +375,7 @@ function MultiDevTaskTest() {
         src: ["./test/resources/**/test1.js","./test/resources/js/test2.js" ],
         out: {
             banner: "This is a test unminified content",
-            name: "testx-min.js",
+            name: "testx-unmin.js",
             path: "./test/out"
         },
         jshint: {
@@ -383,7 +387,7 @@ function MultiDevTaskTest() {
         src: ["./test/resources/**/test1.js","./test/resources/js/test2.js" ],
         out: {
             banner: "This is a test unminified content",
-            name: "testy-min.js",
+            name: "testy-unmin.js",
             path: "./test/out"
         },
         jshint: {
