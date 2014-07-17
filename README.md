@@ -107,67 +107,43 @@ srcobj = {foo: 'foo'};
             })
 </code></pre>
 
+## Browser Support
 
-## Versions
+### Usage
 
-### 0.1.8
-Task Module   - Minify writer fix, for prod task
+* AMD
+    * See jsutilswebRequire-min.js file, as an example of requirejs project style
 
-### 0.1.7
-Object Module - 'resolve' method was added
-Task Module   - file name added to the jshint's error output
+        define([], function() {
+    
+            var jsutilsOnReady = function(obj, arr, tpl) {
+              
+                // use object, array or template 
+              
+            };
+            
+            return jsutilsOnReady;
+        });
 
-### 0.1.6
-Object Module - 'empty' method was added
-Task Module   - expression path match added (e.g. ./**/*.js)
+* None AMD
 
-### 0.1.5
-Task module added to prepare your project for development / production, using JSHint & UglifyJS
-
-### 0.1.4
-XML module removed
-
-### 0.1.3
-XML module added with getting an XML/XSD document and validation functionality using the libxml package.
-
-
-### 0.1.2
-RequireJS dependency removed.
-
-* download the browser version
-    + with NO dependencies: [jsutils-min.js](https://raw.github.com/lastboy/js.utils/master/target/jsutils-min.js)
-        + manually download
-            + [Underscore](http://underscorejs.org/)
-            + [Typedas](https://raw.github.com/alexduloz/typedAs/gh-pages/typedAs.js)
-    + with dependencies: [jsutils-min-all.js](https://raw.github.com/lastboy/js.utils/master/target/jsutils-min-all.js)
-        + typedas and underscore are already inside
-* Usage
     + js.utils global variables for the web:
         + jsutilsObject;
         + jsutilsArray;
-        + jsutilsTemplate;
+        + jsutilsTemplate;  
 
-* Fixes for NPM package including:
-    + JSON object sometimes failed to parse the npm list
+### Download
 
-### 0.0.9
+* None AMD
+    * with NO dependencies: [jsutils-min.js](https://raw.github.com/lastboy/js.utils/master/target/jsutils-min.js)
+        * manually download
+            * [Underscore](http://underscorejs.org/)
+            * [Typedas](https://raw.github.com/alexduloz/typedAs/gh-pages/typedAs.js)
+    * with dependencies: [jsutils-min-all.js](https://raw.github.com/lastboy/js.utils/master/target/jsutils-min-all.js)
+        * typedas and underscore are already inside
 
-Support for the browser version, including:
-Object, Array and Template(w/o template file loading support)
-download: [jsutils-min.js](https://raw.github.com/lastboy/js.utils/master/target/jsutils-min.js)
-
-Assign a ready event:
-
-    jsutilsOnReady = function(obj, arr, tpl){
-    };
-    
-Or you can use js.utils global variables (when the page done loading):
-
-* jsutilsObject;
-* jsutilsArray;
-* jsutilsTemplate;
-
-
+* AMD
+   * [jsutils-require-min.js](https://raw.github.com/lastboy/js.utils/master/target/jsutils-require-min.js)
 
 ## Reference
 
