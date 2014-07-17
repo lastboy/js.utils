@@ -1,4 +1,3 @@
-
 /**
  * @license RequireJS domReady 2.0.1 Copyright (c) 2010-2012, The Dojo Foundation All Rights Reserved.
  * Available via the MIT or new BSD license.
@@ -543,7 +542,96 @@ if (typeof exports !== 'undefined') {
         return _jsutilsModuleTemplate;
     });
 };
-var jsutils = this;
+
+if (typeof exports !== 'undefined') {
+    if (typeof module !== 'undefined' && module.exports) {
+        // nodejs support
+
+        var _global = require("./utils/Global.js");
+
+        module.exports = function () {
+
+            var _module = {
+
+                Object: require("./utils/Object.js"),
+                Array: require("./utils/Array.js"),
+                Template: require("./utils/Template.js"),
+                NPM: require("./utils/NPM.js"),
+                Task: require("./utils/Task.js"),
+
+                // require libxmljs in case of enable
+                // XML: require("./utils/XML.js"),
+
+                init: function (config) {
+                    if (config) {
+                        if ('log' in config) {
+                            _global.set("log", config.log);
+                        }
+                    }
+                },
+
+                testlog: function () {
+                    require("./utils/Logger.js").log(".... testing the log... ");
+                }
+
+            };
+
+            return _module;
+
+        }();
+
+    }
+
+} else {
+
+    define('jsutils',["jsutilsObjectModule", "jsutilsArrayModule", "jsutilsTemplateModule"], function (obj, arr, tpl) {
+
+        var _jsutils = function() {
+            
+            var __jsutils = {};
+                
+            return {
+                
+                init: function(obj, arr, tpl) {
+
+                    __jsutils.jsutilsObject = obj;
+                    __jsutils.jsutilsArray = arr;
+                    __jsutils.jsutilsTemplate = tpl; 
+                    __jsutils.listen = function(jsutilsOnReady) {
+
+                        var jsutilsOnReadyListener,
+                            jsutilsOnReadyDefaultListener = function () {
+                                console.log("js.utils is ready (jsutilsReady callback can be overriden [e.g. jsutilsOnReady=function(obj, arr, tpl){}]");
+                            };
+
+                        if (typeof jsutilsOnReady !== "undefined") {
+                            jsutilsOnReadyListener = jsutilsOnReady;
+                        } else {
+                            jsutilsOnReadyListener = jsutilsOnReadyDefaultListener;
+                        }
+                        jsutilsOnReadyListener.call(jsutils, obj, arr, tpl);
+                    }; 
+                    
+                },
+                
+                getJSUtils: function() {
+                    return __jsutils;
+                }                               
+            }
+            
+        },
+        
+        jsutilsh = new _jsutils();
+
+        jsutilsh.init(obj, arr, tpl);
+        
+        return jsutilsh; 
+            
+    });
+
+
+};
+var jsutils = {};
 
 jsutils.jsutilsObject = {};
 jsutils.jsutilsArray = {};
@@ -565,31 +653,58 @@ require.config({
         "libDomReady": "lib/domReady"
     },
 
+    shim: {
+        'typedAs': {
+            exports: "typedAs"
+        },
+        'underscore': {
+            exports: "_"
+        },
+        'jsutilsObjectModule': {
+            deps: ['typedAs', 'underscore']          
+        },
+        'jsutilsArrayModule': {
+            deps: ['typedAs', 'underscore']          
+        },
+        'jsutilsTemplateModule': {
+            deps: ['typedAs', 'underscore']          
+        }
+    },
+    
     out: "jsutils-min.js",
-    name: "jsutilsweb"
+    name: "jsutils"
 
 });
 
 
-require(["libDomReady", "jsutilsObjectModule", "jsutilsArrayModule", "jsutilsTemplateModule"], function (domReady, obj, arr, tpl) {
+require(["libDomReady", "jsutils"], function (domReady, jsutilsref) {
     domReady(function () {
-
-        var jsutilsOnReadyListener,
-            jsutilsOnReadyDefaultListener = function() {
-                console.log("js.utils is ready (jsutilsReady callback can be overriden [e.g. jsutilsOnReady=function(obj, arr, tpl){}]");
-            };
-
-        jsutils.jsutilsObject = obj;
-        jsutils.jsutilsArray =  arr;
-        jsutils.jsutilsTemplate =  tpl;
-
-        if (typeof jsutilsOnReady !== "undefined") {
-            jsutilsOnReadyListener = jsutilsOnReady;
-        } else {
-            jsutilsOnReadyListener = jsutilsOnReadyDefaultListener;
-        }
-        jsutilsOnReadyListener.call(jsutils, obj, arr, tpl);
+        
+        jsutils = jsutilsref.getJSUtils();
+               
     });
 });
 
+//require(["libDomReady", "jsutilsObjectModule", "jsutilsArrayModule", "jsutilsTemplateModule"], function (domReady, obj, arr, tpl) {
+//    domReady(function () {
+//
+//        var jsutilsOnReadyListener,
+//            jsutilsOnReadyDefaultListener = function() {
+//                console.log("js.utils is ready (jsutilsReady callback can be overriden [e.g. jsutilsOnReady=function(obj, arr, tpl){}]");
+//            };
+//
+//        jsutils.jsutilsObject = obj;
+//        jsutils.jsutilsArray =  arr;
+//        jsutils.jsutilsTemplate =  tpl;
+//
+//        if (typeof jsutilsOnReady !== "undefined") {
+//            jsutilsOnReadyListener = jsutilsOnReady;
+//        } else {
+//            jsutilsOnReadyListener = jsutilsOnReadyDefaultListener;
+//        }
+//        jsutilsOnReadyListener.call(jsutils, obj, arr, tpl);
+//    });
+//});
+
 define("jsutilswebRequire", function(){});
+
