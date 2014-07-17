@@ -13,8 +13,8 @@ requirejs.optimize({
         "jsutilsArrayModule": "utils/Array",
         "jsutilsTemplateModule": "utils/Template",
         "libDomReady": "lib/domReady"
+       
     },
-
 
     out: "jsutils-require-min.js",
     name: "jsutilswebRequire",
