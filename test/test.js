@@ -466,15 +466,20 @@ if (typeof exports !== 'undefined') {
     }
 
     if (typeof require !== "undefined") {
-        this.jsutilsOnReady = function(obj, arr, tpl) {
-            _Object = obj;
-            _Array = arr;
-            _Template = tpl;
-            _log = console;
 
-            btest();
+        define([], function() {
 
-        };
+            var jsutilsOnReady = function(obj, arr, tpl) {
+                _Object = obj;
+                _Array = arr;
+                _Template = tpl;
+                _log = console;
+    
+                btest();
+            };
+            
+            return {jsutilsOnReady: jsutilsOnReady}
+        });
     } else {
         _Object = jsutilsObject;
         _Array = jsutilsArray;

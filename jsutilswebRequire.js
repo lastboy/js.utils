@@ -1,4 +1,4 @@
-var jsutils = this;
+var jsutils = {};
 
 jsutils.jsutilsObject = {};
 jsutils.jsutilsArray = {};
@@ -20,29 +20,55 @@ require.config({
         "libDomReady": "lib/domReady"
     },
 
+    shim: {
+        'typedAs': {
+            exports: "typedAs"
+        },
+        'underscore': {
+            exports: "_"
+        },
+        'jsutilsObjectModule': {
+            deps: ['typedAs', 'underscore']          
+        },
+        'jsutilsArrayModule': {
+            deps: ['typedAs', 'underscore']          
+        },
+        'jsutilsTemplateModule': {
+            deps: ['typedAs', 'underscore']          
+        }
+    },
+    
     out: "jsutils-min.js",
-    name: "jsutilsweb"
+    name: "jsutils"
 
 });
 
 
-require(["libDomReady", "jsutilsObjectModule", "jsutilsArrayModule", "jsutilsTemplateModule"], function (domReady, obj, arr, tpl) {
+require(["libDomReady", "jsutils"], function (domReady, jsutilsref) {
     domReady(function () {
-
-        var jsutilsOnReadyListener,
-            jsutilsOnReadyDefaultListener = function() {
-                console.log("js.utils is ready (jsutilsReady callback can be overriden [e.g. jsutilsOnReady=function(obj, arr, tpl){}]");
-            };
-
-        jsutils.jsutilsObject = obj;
-        jsutils.jsutilsArray =  arr;
-        jsutils.jsutilsTemplate =  tpl;
-
-        if (typeof jsutilsOnReady !== "undefined") {
-            jsutilsOnReadyListener = jsutilsOnReady;
-        } else {
-            jsutilsOnReadyListener = jsutilsOnReadyDefaultListener;
-        }
-        jsutilsOnReadyListener.call(jsutils, obj, arr, tpl);
+        
+        jsutils = jsutilsref.getJSUtils();
+               
     });
 });
+
+//require(["libDomReady", "jsutilsObjectModule", "jsutilsArrayModule", "jsutilsTemplateModule"], function (domReady, obj, arr, tpl) {
+//    domReady(function () {
+//
+//        var jsutilsOnReadyListener,
+//            jsutilsOnReadyDefaultListener = function() {
+//                console.log("js.utils is ready (jsutilsReady callback can be overriden [e.g. jsutilsOnReady=function(obj, arr, tpl){}]");
+//            };
+//
+//        jsutils.jsutilsObject = obj;
+//        jsutils.jsutilsArray =  arr;
+//        jsutils.jsutilsTemplate =  tpl;
+//
+//        if (typeof jsutilsOnReady !== "undefined") {
+//            jsutilsOnReadyListener = jsutilsOnReady;
+//        } else {
+//            jsutilsOnReadyListener = jsutilsOnReadyDefaultListener;
+//        }
+//        jsutilsOnReadyListener.call(jsutils, obj, arr, tpl);
+//    });
+//});
