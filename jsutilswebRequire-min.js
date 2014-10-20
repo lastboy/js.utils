@@ -12,21 +12,17 @@ require.config({
     baseUrl: ".",
 
     paths: {
-        "typedAs": "node_modules/typedas/typedAs",
         "underscore": "node_modules/underscore/underscore-min",    
         "jsutils": "target/jsutils-require-min",
         "testunit": "test/test"
     },
 
     shim: {
-        'typedAs': {
-            exports: "typedAs"
-        },
         'underscore': {
             exports: "_"
         },
         "jsutils": {
-            "deps": ["typedAs", "underscore"],
+            "deps": ["underscore"],
             "exports": "jsutils"
         },
         "testunit": {

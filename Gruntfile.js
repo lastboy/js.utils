@@ -18,7 +18,7 @@ module.exports = function (grunt) {
 
         concat: {
             noamd: {
-                files: { './target/jsutils-min-all.js': [ './node_modules/typedas/typedAs.js',
+                files: { './target/jsutils-min-all.js': [ 
                     "./node_modules/underscore/underscore-min.js",
                     './target/jsutils-min.js'
                 ] }
@@ -35,7 +35,7 @@ module.exports = function (grunt) {
 
         // Before generating any new files, remove any previously-created files.
         clean: {
-            tests: ['target']
+            tests: ['target', 'test/out']
         }
 
     });

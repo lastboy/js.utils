@@ -167,16 +167,16 @@ if (typeof exports !== 'undefined') {
 
         // nodejs support
         _jsutilsModuleXML.internal({
-            typedas: require("typedas"),
+            _: require("underscore"),
             arrayutils: require("./Array.js")
         });
         module.exports = _jsutilsModuleXML;
 
     }
 } else {
-    define(["typedAs", "jsutilsArrayModule"], function (typedasref, arrayref) {
+    define(["underscore", "jsutilsArrayModule"], function (underscoreref, arrayref) {
 
-        _jsutilsModuleXML.internal({typedas: typedAs, arrayutils: arrayref});
+        _jsutilsModuleXML.internal({_: _, arrayutils: arrayref});
 
         delete _jsutilsModuleXML.validate;
         return _jsutilsModuleXML;

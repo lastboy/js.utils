@@ -18,7 +18,7 @@ var _jsutilsModuleArray = function () {
         cleanupArray: function (arr) {
             var newArr = [];
 
-            if (arr && _vars.typedas.isArray(arr)) {
+            if (arr && _vars._.isArray(arr)) {
                 arr.forEach(function (item) {
                     if (item !== null && item !== undefined) {
                         newArr.push(item)
@@ -41,7 +41,7 @@ var _jsutilsModuleArray = function () {
             var newArr = [],
                 counter = 0;
 
-            if (arr && _vars.typedas.isArray(arr)) {
+            if (arr && _vars._.isArray(arr)) {
 
                 arr.forEach(function (item) {
                     if (item !== value && item !== null && item !== undefined) {
@@ -59,14 +59,14 @@ var _jsutilsModuleArray = function () {
 if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
         // nodejs support
-        _jsutilsModuleArray.internal({typedas: require("typedas")});
+        _jsutilsModuleArray.internal({_: require("underscore")});
         module.exports = _jsutilsModuleArray;
 
     }
 } else {
-    define(["typedAs"], function (typedasref) {
+    define(["underscore"], function () {
         // browser support
-        _jsutilsModuleArray.internal({typedas: typedAs});
+        _jsutilsModuleArray.internal({_: _});
         return _jsutilsModuleArray;
     });
 }

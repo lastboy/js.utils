@@ -147,7 +147,7 @@ var _jsutilsModuleArray = function () {
         cleanupArray: function (arr) {
             var newArr = [];
 
-            if (arr && _vars.typedas.isArray(arr)) {
+            if (arr && _vars._.isArray(arr)) {
                 arr.forEach(function (item) {
                     if (item !== null && item !== undefined) {
                         newArr.push(item)
@@ -170,7 +170,7 @@ var _jsutilsModuleArray = function () {
             var newArr = [],
                 counter = 0;
 
-            if (arr && _vars.typedas.isArray(arr)) {
+            if (arr && _vars._.isArray(arr)) {
 
                 arr.forEach(function (item) {
                     if (item !== value && item !== null && item !== undefined) {
@@ -188,14 +188,14 @@ var _jsutilsModuleArray = function () {
 if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
         // nodejs support
-        _jsutilsModuleArray.internal({typedas: require("typedas")});
+        _jsutilsModuleArray.internal({_: require("underscore")});
         module.exports = _jsutilsModuleArray;
 
     }
 } else {
-    define('jsutilsArrayModule',["typedAs"], function (typedasref) {
+    define('jsutilsArrayModule',["underscore"], function () {
         // browser support
-        _jsutilsModuleArray.internal({typedas: typedAs});
+        _jsutilsModuleArray.internal({_: _});
         return _jsutilsModuleArray;
     });
 };
@@ -223,7 +223,7 @@ var _jsutilsModuleObject = function () {
 
             if (obj) {
                 for (key in obj) {
-                    if (_vars.typedas.isObject(value) || _vars.typedas.isArray(value)) {
+                    if (_vars._.isObject(value) || _vars._.isArray(value)) {
                         if (JSON.stringify(obj[key]) === JSON.stringify(value)) {
                             return true;
                         }
@@ -261,18 +261,12 @@ var _jsutilsModuleObject = function () {
 
                         obj = destobj[name];
 
-                        if (_vars.typedas.isObject(srcobj[name])) {
-                            if (!destobj[name]) {
-                                destobj[name] = {};
-                            }
-                            arguments.callee.call(me, srcobj[name], destobj[name], override);
-
-                        } else if (_vars.typedas.isArray(srcobj[name])) {
+                        if (_vars._.isArray(srcobj[name])) {
 
                             if (!obj) {
                                 destobj[name] = srcobj[name];
 
-                            } else if (_vars.typedas.isArray(obj)) {
+                            } else if (_vars._.isArray(obj)) {
 
                                 _vars.arrayutils.cleanupArray(srcobj[name]);
                                 if (override) {
@@ -288,13 +282,19 @@ var _jsutilsModuleObject = function () {
                                 }
                             }
 
+                        } else if (_vars._.isObject(srcobj[name])) {
+                            if (!destobj[name]) {
+                                destobj[name] = {};
+                            }
+                            arguments.callee.call(me, srcobj[name], destobj[name], override);
+
                         } else {
                             if (override || obj === undefined) {
                                 if (!destobj[name] || (destobj[name] && override)) {
                                     destobj[name] = srcobj[name];
                                 }
                             }
-                        }
+                        } 
 
                     }
                 }
@@ -374,16 +374,16 @@ if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
         // nodejs support
         _jsutilsModuleObject.internal({
-            typedas: require("typedas"),
+            _: require("underscore"),
             arrayutils: require("./Array.js")
         });
         module.exports = _jsutilsModuleObject;
 
     }
 } else {
-    define('jsutilsObjectModule',["typedAs", "jsutilsArrayModule"], function(typedasref, arrayref) {
+    define('jsutilsObjectModule',["underscore", "jsutilsArrayModule"], function(underscoreref, arrayref) {
 
-        _jsutilsModuleObject.internal({typedas: typedAs, arrayutils: arrayref});
+        _jsutilsModuleObject.internal({_: _, arrayutils: arrayref});
         return _jsutilsModuleObject;
     });
 }
@@ -645,7 +645,6 @@ require.config({
     baseUrl: ".",
 
     paths: {
-        "typedAs": "node_modules/typedas/typedAs",
         "underscore": "node_modules/underscore/underscore-min",
         "jsutilsObjectModule": "utils/Object",
         "jsutilsArrayModule": "utils/Array",
@@ -654,20 +653,17 @@ require.config({
     },
 
     shim: {
-        'typedAs': {
-            exports: "typedAs"
-        },
         'underscore': {
             exports: "_"
         },
         'jsutilsObjectModule': {
-            deps: ['typedAs', 'underscore']          
-        },
+            deps: ['underscore']          
+        }, 
         'jsutilsArrayModule': {
-            deps: ['typedAs', 'underscore']          
+            deps: ['underscore']          
         },
         'jsutilsTemplateModule': {
-            deps: ['typedAs', 'underscore']          
+            deps: ['underscore']          
         }
     },
     

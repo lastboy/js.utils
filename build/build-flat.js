@@ -14,7 +14,6 @@ requirejs.optimize({
     baseUrl: "../",
 
     paths: {
-        "typedAs": "node_modules/typedas/typedAs",
         "underscore": "node_modules/underscore/underscore-min",
         "jsutilsObjectModule": "utils/Object",
         "jsutilsArrayModule": "utils/Array",
@@ -29,7 +28,6 @@ requirejs.optimize({
         if (!counter) {
             counter++;
             result += "var underscore;";
-            //result += fs.readFileSync("./node_modules/typedas/typedAs.js") + "\n";
             //result += fs.readFileSync("./node_modules/underscore/underscore-min.js") + "\n";
         }
 
@@ -46,7 +44,6 @@ requirejs.optimize({
 
     include:["jsutilsTemplateModule","jsutilsArrayModule", "jsutilsTemplateModule"],
     excludeShallow: [
-        "typedAs",
         "underscore"
     ]
 
@@ -61,7 +58,6 @@ requirejs.optimize({
 
 //var concat = require('concat-files');
 //concat([
-//    '../node_modules/typedas/typedAs.js',
 //    "../node_modules/underscore/underscore-min.js",
 //    'jsutils-min.js'
 //

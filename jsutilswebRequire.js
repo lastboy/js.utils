@@ -12,7 +12,6 @@ require.config({
     baseUrl: ".",
 
     paths: {
-        "typedAs": "node_modules/typedas/typedAs",
         "underscore": "node_modules/underscore/underscore-min",
         "jsutilsObjectModule": "utils/Object",
         "jsutilsArrayModule": "utils/Array",
@@ -21,20 +20,17 @@ require.config({
     },
 
     shim: {
-        'typedAs': {
-            exports: "typedAs"
-        },
         'underscore': {
             exports: "_"
         },
         'jsutilsObjectModule': {
-            deps: ['typedAs', 'underscore']          
-        },
+            deps: ['underscore']          
+        }, 
         'jsutilsArrayModule': {
-            deps: ['typedAs', 'underscore']          
+            deps: ['underscore']          
         },
         'jsutilsTemplateModule': {
-            deps: ['typedAs', 'underscore']          
+            deps: ['underscore']          
         }
     },
     

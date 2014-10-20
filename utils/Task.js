@@ -17,7 +17,7 @@ var _jsutilsModuleTask = function () {
 
             var result = [];
 
-            if (_vars.typedas.isArray(config)) {
+            if (_vars._.isArray(config)) {
 
                 config.forEach(function (item) {
                     if (item && _local[action]) {
@@ -48,7 +48,7 @@ var _jsutilsModuleTask = function () {
             }
 
             if (src) {
-                if (_vars.typedas.isArray(src)) {
+                if (_vars._.isArray(src)) {
                     lsrc = [];
                     src.forEach(function (item) {
                         var match;
@@ -67,7 +67,7 @@ var _jsutilsModuleTask = function () {
                         }
                     });
 
-                } else if (_vars.typedas.isString(src)) {
+                } else if (_vars._.isString(src)) {
 
                     try {
                         match = __match(src, opt);
@@ -291,7 +291,7 @@ var _jsutilsModuleTask = function () {
             if (src) {
                 src = _local._globmatch({src: src});
 
-                if (_vars.typedas.isArray(src)) {
+                if (_vars._.isArray(src)) {
                     size = src.length;
                     for (idx = 0; idx < size; idx++) {
                         item = src[idx];
@@ -299,7 +299,7 @@ var _jsutilsModuleTask = function () {
                             contentList.push(_vars.fs.readFileSync(item, "utf8"));
                         }
                     }
-                } else if (_vars.typedas.isString(src)) {
+                } else if (_vars._.isString(src)) {
                     contentList.push(_vars.fs.readFileSync(src, "utf8"));
                 }
             }
@@ -350,7 +350,7 @@ var _jsutilsModuleTask = function () {
             if (src) {
                 src = _local._globmatch({src: src});
 
-                if (_vars.typedas.isArray(src)) {
+                if (_vars._.isArray(src)) {
                     code = null;
                     size = src.length;
                     for (idx = 0; idx < size; idx++) {
@@ -363,7 +363,7 @@ var _jsutilsModuleTask = function () {
                             }
                         }
                     }
-                } else if (_vars.typedas.isString(src)) {
+                } else if (_vars._.isString(src)) {
                     code = _vars.fs.readFileSync(src, "utf8");
                 }
             }
@@ -424,7 +424,7 @@ if (typeof exports !== 'undefined') {
         // nodejs support
         _jsutilsModuleTask.internal({
             fs: require("fs.extra"),
-            typedas: require("typedas"),
+            _: require("underscore"),
             uglify: require("uglify-js"),
             jshint: require("jshint").JSHINT,
             log: require("./Logger.js"),

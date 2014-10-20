@@ -151,7 +151,7 @@ function NPMTest() {
      *  Test for NPM info & installed methods
      *
      */
-    _jsutils.NPM.info({global: false, details: true, debug: 0, list: ["typedas"]}, function (err) {
+    _jsutils.NPM.info({global: false, details: true, debug: 0, list: ["underscore"]}, function (err) {
         console.log("\n> ... Test 1, get info details ");
         var data = this.data;
         data.forEach(function (item) {
@@ -184,9 +184,14 @@ function NPMTest() {
         console.log(this);
     });
 
+   _jsutils.NPM.installed({global: true, list: ["bower"], debug: 0, depth: "10"}, function (err) {
+        console.log("\n> ... Test 3.1, check if bower installed globally");
+        console.log(this);
+    });
 
-    _jsutils.NPM.installed({list: ["typedas"], depth: "-1"}, function (err) {
-        console.log("\n> ... Test 4, check if typedas installed");
+
+    _jsutils.NPM.installed({list: ["underscore"], depth: "-1"}, function (err) {
+        console.log("\n> ... Test 4, check if underscore installed");
         console.log(this);
     });
 

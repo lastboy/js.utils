@@ -7,7 +7,6 @@ requirejs.optimize({
     baseUrl: "../",
 
     paths: {
-        "typedAs": "node_modules/typedas/typedAs",
         "underscore": "node_modules/underscore/underscore-min",
         "jsutilsObjectModule": "utils/Object",
         "jsutilsArrayModule": "utils/Array",
@@ -21,7 +20,7 @@ requirejs.optimize({
 
     optimize: "none",
 
-    exclude: ["typedAs", "underscore"],
+    exclude: ["underscore"],
 
 
     findNestedDependencies: true,
