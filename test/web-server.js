@@ -33,7 +33,7 @@ var server = function() {
             }
 
             var path = (config.path || "."),
-                port = (config.port || "8089");
+                port = (config.port || "8080");
 
             if (!path || (path && !_fs.existsSync(path))) {
                 return undefined;
