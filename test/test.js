@@ -123,6 +123,7 @@ function loadTemplateTest() {
 
     console.log("Template output: ", out);
 
+    _Template.setMustache(true);
     _log.log(" Test 3... ");
     var out = _Template.template({
         content: "Custom content Test was loaded {{status}}.",
@@ -464,6 +465,7 @@ if (typeof exports !== 'undefined') {
 
         containsTest();
 
+        _Template.setMustache(true);
         console.log("Running template test... ", _Template.template({
             data: {test: "test"},
             content: "This is a '{{test}}'"
